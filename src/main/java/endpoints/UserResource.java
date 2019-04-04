@@ -43,7 +43,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.List;
-
+import security.*;
 
 @Stateless
 @Path("users")
@@ -53,7 +53,7 @@ public class UserResource {
     private UserDao userDao;
 
     @GET
-    @Path("/all")
+    @Secured
     @Produces("application/json")
     public List<User> all() {
         return userDao.getAll();
@@ -70,7 +70,9 @@ public class UserResource {
     public void update(User user) {
         userDao.update(user);
     }
+
     @GET
+    @Secured
     @Path("{id}")
     @Consumes("application/json")
     public User getUser(@PathParam("id")Long id){
@@ -78,6 +80,7 @@ public class UserResource {
     }
 
     @DELETE
+    @Secured
     @Path("{id}")
     @Consumes("application/json")
     public void delete(@PathParam("id") Long id) {

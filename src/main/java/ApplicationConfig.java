@@ -39,12 +39,9 @@
 import beans.UserBean;
 import endpoints.MessageResource;
 import endpoints.UserResource;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import java.security.KeyPair;
 import java.util.Set;
 
 @ApplicationPath("app")
@@ -61,5 +58,6 @@ public class ApplicationConfig extends Application {
         resources.add(UserResource.class);
         resources.add(UserBean.class);
         resources.add(MessageResource.class);
+
     }
 }

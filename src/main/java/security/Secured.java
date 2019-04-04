@@ -10,5 +10,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @NameBinding
 @Retention(RUNTIME)
 @Target({TYPE, ElementType.METHOD})
-public @interface secured {
+public @interface Secured {
 }
