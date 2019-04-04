@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="myUnit" transaction-type="JTA">
+        <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+        <jta-data-source>jdbc/MySqlPool</jta-data-source>
+        <properties>
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="true" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgresPlusDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+        </properties>
+    </persistence-unit>
+</persistence>
