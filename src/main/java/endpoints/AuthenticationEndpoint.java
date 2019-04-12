@@ -19,6 +19,7 @@ import java.security.Key;
 public class AuthenticationEndpoint {
     @Inject
     private UserDao userDao;
+
     @POST
     public Response authenticateUser(@FormParam("username") String username,
                                      @FormParam(("password")) String password) {

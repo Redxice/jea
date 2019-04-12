@@ -31,6 +31,7 @@ public class MessageResource {
     public void update(Message message) {
         messageDao.update(message);
     }
+
     @GET
     @Path("{id}")
     @Consumes("application/json")
