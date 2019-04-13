@@ -11,7 +11,7 @@ public class MessageTest {
     @BeforeClass
     public static void setup(){
         RestAssured.port = 8080;
-        RestAssured.basePath = "/jea_war_exploded/app/";
+        RestAssured.basePath = "/jea_war_exploded/api/";
         RestAssured.baseURI = "http://localhost";
     }
     @Test

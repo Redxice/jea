@@ -37,14 +37,17 @@
  */
 
 import beans.UserBean;
+import endpoints.AuthenticationEndpoint;
 import endpoints.MessageResource;
 import endpoints.UserResource;
+import security.AuthenticationFilter;
+import security.CorsFilter;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.Set;
 
-@ApplicationPath("app")
+@ApplicationPath("api")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -58,6 +61,8 @@ public class ApplicationConfig extends Application {
         resources.add(UserResource.class);
         resources.add(UserBean.class);
         resources.add(MessageResource.class);
-
+        resources.add(AuthenticationFilter.class);
+        resources.add(AuthenticationEndpoint.class);
+        resources.add(CorsFilter.class);
     }
 }

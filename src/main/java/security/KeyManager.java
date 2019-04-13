@@ -1,14 +1,18 @@
 package security;
 
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
+import javax.annotation.PostConstruct;
 import java.security.KeyPair;
+import java.security.SecureRandom;
 
 public class KeyManager {
-   private static KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.HS256);
 
-    public static KeyPair getKeyPair() {
-        return keyPair;
+    private static byte[] sharedKey = new byte[32];
+    @PostConstruct
+    private void setSharedKey(){
+        new SecureRandom().nextBytes(sharedKey);
     }
+   public static byte[] getSharedKey(){
+        return sharedKey;
+   }
 }

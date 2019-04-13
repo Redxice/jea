@@ -1,6 +1,10 @@
 package security;
 
-import io.jsonwebtoken.Jwts;
+
+
+import com.nimbusds.jose.JWSObject;
+import com.nimbusds.jose.JWSVerifier;
+import com.nimbusds.jose.crypto.MACVerifier;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -64,9 +68,13 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     }
 
     private void validateToken(String token) throws Exception {
-        // Check if the token was issued by the server and if it's not expired
-        // Throw an Exception if the token is invalid
-        Jwts.parser().setSigningKey(KeyManager.getKeyPair().getPublic()).parseClaimsJws(token);
+        JWSObject jwsObject = JWSObject.parse(token);
+
+        JWSVerifier verifier = new MACVerifier(KeyManager.getSharedKey());
+
+       if(!jwsObject.verify(verifier)){
+           throw new Exception();
+       }
     }
 }
 
