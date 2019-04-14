@@ -59,12 +59,13 @@ public class UserDao implements Serializable {
         return DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findOne", User.class).setParameter("id", id).getResultList());
     }
 
-    public void save(User user) {
+    public User save(User user) {
         entityManager.persist(user);
+        return validate(user.getName(),user.getPassword());
     }
 
-    public void update(User user) {
-        entityManager.merge(user);
+    public User update(User user) {
+        return entityManager.merge(user);
     }
 
     public void delete(User user) {

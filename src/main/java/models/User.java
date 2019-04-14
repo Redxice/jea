@@ -37,7 +37,13 @@ package models;/*
  */
 
 import javax.persistence.*;
+import javax.ws.rs.core.Link;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.security.Key;
+import java.util.List;
 
 
 @Entity
@@ -47,6 +53,8 @@ import java.security.Key;
         @NamedQuery(name ="User.validate", query = "select u from User u where u.password = :password and u.name= :username")
     }
 )
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User {
 
     @Id

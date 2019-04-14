@@ -36,55 +36,74 @@ package endpoints;/*
  * holder.
  */
 
+import com.sun.jndi.toolkit.url.Uri;
 import dao.UserDao;
+import dto.UserDto;
 import models.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.ArrayList;
 import java.util.List;
 import security.*;
 
 @Stateless
 @Path("users")
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 public class UserResource {
 
     @Inject
     private UserDao userDao;
-
     @GET
-    @Secured
-    @Produces("application/json")
-    public List<User> all() {
-        return userDao.getAll();
+    @Path("/test")
+    public UserDto getRandom(@Context UriInfo uriInfo){
+        Link self = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder())
+                .rel("self").type("GET").build();
+        UserDto userDto = new UserDto();
+        userDto.setName("Paul");
+        userDto.getLinks().add(self);
+        return userDto;
+    }
+    @GET
+    public Response all(@Context UriInfo uriInfo) {
+        List<User> users = userDao.getAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for(User user : users){
+            UserDto userDto = new UserDto(user,uriInfo);
+            userDtos.add(userDto);
+        }
+        return Response.ok(userDtos).build();
     }
 
     @POST
-    @Consumes("application/json")
-    public void save(User user) {
-        userDao.save(user);
+    public UserDto save(User user, @Context UriInfo uriInfo) {
+        User new_user = userDao.save(user);
+        return new UserDto(new_user,uriInfo);
     }
 
     @PUT
-    @Consumes("application/json")
-    public void update(User user) {
-        userDao.update(user);
+    public UserDto update(User user, @Context UriInfo uriInfo) {
+        User updated_user= userDao.update(user);
+        return new UserDto(updated_user,uriInfo);
     }
 
     @GET
     @Secured
     @Path("{id}")
-    @Consumes("application/json")
-    public User getUser(@PathParam("id")Long id){
-        return userDao.find(id);
+    public UserDto getUser(@PathParam("id")Long id, @Context UriInfo uriInfo){
+        User found_user= userDao.find(id);
+        return new UserDto(found_user,uriInfo);
     }
 
     @DELETE
     @Secured
     @Path("{id}")
-    @Consumes("application/json")
     public void delete(@PathParam("id") Long id) {
         User user = userDao.find(id);
         userDao.delete(user);
     }
+
 }

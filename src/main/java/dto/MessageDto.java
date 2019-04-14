@@ -1,30 +1,27 @@
-package models;
+package dto;
 
-import javax.persistence.*;
+import models.Message;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-@Entity
-@NamedQueries({
-        @NamedQuery(name = "models.Message.findOne", query = "select m from Message m where m.id = :id"),
-        @NamedQuery(name = "models.Message.getAll", query = "select m from Message m")
-}
-)
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Message implements Serializable {
-    @Id
-    @GeneratedValue
+public class MessageDto {
     private long id;
     private long userID;
     private String content;
-    public Message(){
+    private String uri;
 
+    public MessageDto(Message message){
+        this.id = message.getId();
+        this.userID = message.getUserID();
+        this.content = message.getContent();
     }
-
     public long getId() {
         return id;
     }
@@ -47,5 +44,13 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }
