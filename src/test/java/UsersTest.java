@@ -1,12 +1,14 @@
 import com.jayway.restassured.RestAssured;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsersTest {
         //TO:DO find a way to run methods in certain order.
         @BeforeClass
@@ -16,11 +18,11 @@ public class UsersTest {
             RestAssured.baseURI = "http://localhost";
         }
         @Test
-        public void getAllUsersTest(){
-            given().when().get("users/all").then().statusCode(200);
+        public void agetAllUsersTest(){
+            given().when().get("users").then().statusCode(200);
         }
         @Test
-        public void postUserTest(){
+        public void apostUserTest(){
             Map<String,String> user = new HashMap<>();
             user.put("name","Henk");
             user.put("password","HenkPassword");
@@ -33,9 +35,9 @@ public class UsersTest {
                     .statusCode(204);
         }
         @Test
-        public void getUserInvalidTest(){
+        public void agetUserInvalidTest(){
             given()
-                    .pathParam("id",1)
+                    .pathParam("id",82521)
                     .when()
                     .get("users/{id}").
                     then()
@@ -44,7 +46,7 @@ public class UsersTest {
         @Test
         public void getUserValidTest(){
             given()
-                    .pathParam("id",2)
+                    .pathParam("id",1)
                     .when()
                     .get("users/{id}").
                     then()
@@ -53,7 +55,6 @@ public class UsersTest {
         @Test
         public void updateUserTest(){
             Map<String,String> user = new HashMap<>();
-            user.put("id","2");
             user.put("name","Henk");
             user.put("password","HenkPassword2");
             given()
@@ -67,7 +68,7 @@ public class UsersTest {
         }
 
         @Test
-        public void deleteUserTest(){
+        public void zdeleteUserTest(){
             given()
                     .pathParam("id",1)
                     .when()
