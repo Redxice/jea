@@ -39,10 +39,12 @@ package endpoints;/*
 import com.sun.jndi.toolkit.url.Uri;
 import dao.UserDao;
 import dto.UserDto;
+import interceptors.testInterceptor;
 import models.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.ArrayList;
@@ -57,7 +59,9 @@ public class UserResource {
 
     @Inject
     private UserDao userDao;
+
     @GET
+    @Interceptors(testInterceptor.class)
     @Path("/test")
     public UserDto getRandom(@Context UriInfo uriInfo){
         Link self = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder())

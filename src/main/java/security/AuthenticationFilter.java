@@ -1,7 +1,7 @@
 package security;
 
 
-
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -14,12 +14,13 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.text.ParseException;
 
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
-    private static final String REALM ="User";
+    private static final String REALM = "User";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
     @Override
@@ -39,14 +40,12 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         String token = authorizationHeader
                 .substring(AUTHENTICATION_SCHEME.length()).trim();
 
-        try {
-            // Validate the token
-            validateToken(token);
-
-        } catch (Exception e) {
+        if (!validateToken(token)) {
             abortWithUnauthorized(requestContext);
         }
+
     }
+
     private boolean isTokenBasedAuthentication(String authorizationHeader) {
 
         // Check if the Authorization header is valid
@@ -67,14 +66,18 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                         .build());
     }
 
-    private void validateToken(String token) throws Exception {
-        JWSObject jwsObject = JWSObject.parse(token);
+    private boolean validateToken(String token) {
+        try {
+            JWSObject jwsObject = JWSObject.parse(token);
 
-        JWSVerifier verifier = new MACVerifier(KeyManager.getSharedKey());
+            JWSVerifier verifier = new MACVerifier(KeyManager.getSharedKey());
 
-       if(!jwsObject.verify(verifier)){
-           throw new Exception();
-       }
+            return jwsObject.verify(verifier);
+        } catch (ParseException | JOSEException e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
 }
 
