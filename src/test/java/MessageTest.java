@@ -9,20 +9,22 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class MessageTest {
     @BeforeClass
-    public static void setup(){
-        RestAssured.port = 8080;
-        RestAssured.basePath = "/jea_war_exploded/api/";
-        RestAssured.baseURI = "http://localhost";
+    public static void setup() {
+        RestAssured.port = basicServerInfo.port;
+        RestAssured.basePath = basicServerInfo.basePath;
+        RestAssured.baseURI = basicServerInfo.baseURI;
     }
+
     @Test
-    public void getAllMessagesTest(){
+    public void getAllMessagesTest() {
         given().when().get("messages/all").then().statusCode(200);
     }
+
     @Test
-    public void postMessageTest(){
-        Map<String,String> message = new HashMap<>();
-        message.put("userID","1");
-        message.put("Content","Cool content");
+    public void postMessageTest() {
+        Map<String, String> message = new HashMap<>();
+        message.put("userID", "1");
+        message.put("Content", "Cool content");
         given()
                 .contentType("application/json")
                 .body(message)
@@ -31,10 +33,11 @@ public class MessageTest {
                 .then()
                 .statusCode(204);
     }
+
     @Test
-    public void getMessageTest(){
+    public void getMessageTest() {
         given()
-                .pathParam("id",1)
+                .pathParam("id", 1)
                 .when()
                 .get("messages/{id}").
                 then()
@@ -42,11 +45,11 @@ public class MessageTest {
     }
 
     @Test
-    public void updateMessageTest(){
-        Map<String,String> message = new HashMap<>();
-        message.put("id","1");
-        message.put("userID","1");
-        message.put("Content","Cool content");
+    public void updateMessageTest() {
+        Map<String, String> message = new HashMap<>();
+        message.put("id", "1");
+        message.put("userID", "1");
+        message.put("Content", "Cool content");
         given()
                 .contentType("application/json")
                 .body(message)
@@ -58,9 +61,9 @@ public class MessageTest {
     }
 
     @Test
-    public void deleteMessageTest(){
+    public void deleteMessageTest() {
         given()
-                .pathParam("id",1)
+                .pathParam("id", 1)
                 .when()
                 .delete("messages/{id}").
                 then()

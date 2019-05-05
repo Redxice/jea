@@ -64,6 +64,7 @@ public class User {
     private String name;
     private String password;
     private String token;
+    private UserRoles userRole;
 
     public User() {
     }
@@ -71,6 +72,7 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+        this.userRole = UserRoles.User;
     }
 
     @Override
@@ -108,5 +110,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public UserRoles getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRoles userRole) {
+        this.userRole = userRole;
     }
 }

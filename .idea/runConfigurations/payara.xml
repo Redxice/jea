@@ -1,9 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="payara" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="payara" ALTERNATIVE_JRE_ENABLED="false">
-    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/jea_war_exploded/index.xhtml" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="jea:war">
+      <artifact name="jea:war exploded">
         <settings />
       </artifact>
     </deployment>
@@ -67,6 +66,7 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
+        <artifact name="jea:war exploded" />
         <artifact name="jea:war" />
       </option>
     </method>

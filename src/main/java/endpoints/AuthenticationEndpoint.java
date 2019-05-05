@@ -1,48 +1,60 @@
 package endpoints;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import dao.UserDao;
 import models.User;
-import org.apache.sling.commons.json.JSONObject;
 import security.KeyManager;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-@Path("/authentication")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Stateless
+@Path("authentication")
 public class AuthenticationEndpoint {
+
     @Inject
     private UserDao userDao;
 
     @POST
-    public User authenticateUser(@Context HttpServletRequest httpServletRequest) {
-        String username = httpServletRequest.getHeader("username");
-        String password = httpServletRequest.getHeader("password");
-
-        User user = userDao.validate(username, password);
-        if (user != null) {
-            String token = generateToken(username);
-            user.setToken(token);
-            return user;
-        } else {
-            return null;
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response authenticateUser(@Context HttpServletRequest httpServletRequest) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
+            List<String> usernameAndPassword = getUsernameAndPassword(authorizationHeader);
+            if (usernameAndPassword.size() == 2) {
+                String username = usernameAndPassword.get(0);
+                String password = usernameAndPassword.get(1);
+                User user = userDao.validate(username, password);
+                if (user != null) {
+                    String token = generateToken(user);
+                    return Response.ok().header("Authorization","Bearer "+token).build();
+                }
+            }
         }
 
+        return Response.status(401).build();
     }
 
-    private String generateToken(String username) {
+
+    private String generateToken(User user) {
         JWTClaimsSet claims = new JWTClaimsSet.Builder()
-                .claim("username", username)
+                .issuer("jeaServer")
+                .notBeforeTime(new Date(System.currentTimeMillis()-300000))
+                .expirationTime(new Date(System.currentTimeMillis()+1800000))
+                .issueTime(new Date(System.currentTimeMillis()))
+                .claim("username", user.getName())
+                .claim("scope","users")
                 .build();
         JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256),
                 new Payload(claims.toJSONObject()));
@@ -52,6 +64,17 @@ public class AuthenticationEndpoint {
             e.printStackTrace();
         }
         return jwsObject.serialize();
+    }
+
+    private List<String> getUsernameAndPassword(String authorizationHeader) {
+        int indexStartUsername = authorizationHeader.indexOf(" ");
+        int indexEndUsername = authorizationHeader.indexOf(":");
+        String username = authorizationHeader.substring(indexStartUsername,indexEndUsername);
+        String password = authorizationHeader.substring(indexEndUsername+1);
+        List<String> credentials = new ArrayList<>();
+        credentials.add(username);
+        credentials.add(password);
+        return credentials;
     }
 }
 

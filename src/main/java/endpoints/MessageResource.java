@@ -8,15 +8,11 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Stateless
-@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Path("messages")
 public class MessageResource {
 
@@ -24,7 +20,6 @@ public class MessageResource {
     private MessageDao messageDao;
 
     @GET
-    @Produces("application/json")
     public List<Message> all() {
         return messageDao.getAll();
     }
@@ -39,27 +34,23 @@ public class MessageResource {
     }
 
     @POST
-    @Consumes("application/json")
     public void save(Message message) {
         messageDao.save(message);
     }
 
     @PUT
-    @Consumes("application/json")
     public void update(Message message) {
         messageDao.update(message);
     }
 
     @GET
     @Path("{id}")
-    @Consumes("application/json")
     public Message getMessage(@PathParam("id")Long id){
         return messageDao.find(id);
     }
 
     @DELETE
     @Path("{id}")
-    @Consumes("application/json")
     public void delete(@PathParam("id") Long id) {
         Message message = messageDao.find(id);
         messageDao.delete(message);

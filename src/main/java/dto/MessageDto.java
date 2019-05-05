@@ -2,15 +2,6 @@ package dto;
 
 import models.Message;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class MessageDto {
     private long id;
     private long userID;

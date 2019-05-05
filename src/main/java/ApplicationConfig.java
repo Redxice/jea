@@ -36,7 +36,9 @@
  * holder.
  */
 
-import beans.UserBean;
+
+
+
 import endpoints.AuthenticationEndpoint;
 import endpoints.MessageResource;
 import endpoints.UserResource;
@@ -47,7 +49,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.Set;
 
-@ApplicationPath("api")
+@ApplicationPath("/api")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -59,7 +61,6 @@ public class ApplicationConfig extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(UserResource.class);
-        resources.add(UserBean.class);
         resources.add(MessageResource.class);
         resources.add(AuthenticationFilter.class);
         resources.add(AuthenticationEndpoint.class);
