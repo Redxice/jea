@@ -50,7 +50,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "User.findOne", query = "select u from User u where u.id = :id"),
         @NamedQuery(name = "User.getAll", query = "select u from User u"),
-        @NamedQuery(name ="User.validate", query = "select u from User u where u.password = :password and u.name= :username")
+        @NamedQuery(name ="User.validate", query = "select u from User u where u.password = :password and u.name= :name"),
+        @NamedQuery(name ="User.findByName", query = "select u from User u where  u.name= :name")
     }
 )
 @XmlRootElement
@@ -63,8 +64,8 @@ public class User {
     @Column(unique = true)
     private String name;
     private String password;
-    private String token;
-    private UserRoles userRole;
+    private int level;
+    private int hoursPlayed;
 
     public User() {
     }
@@ -72,7 +73,6 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.userRole = UserRoles.User;
     }
 
     @Override
@@ -86,6 +86,22 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getHoursPlayed() {
+        return hoursPlayed;
+    }
+
+    public void setHoursPlayed(int hoursPlayed) {
+        this.hoursPlayed = hoursPlayed;
     }
 
     public String getName() {
@@ -102,21 +118,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public UserRoles getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRoles userRole) {
-        this.userRole = userRole;
     }
 }

@@ -39,16 +39,19 @@ package endpoints;/*
 import com.sun.jndi.toolkit.url.Uri;
 import dao.UserDao;
 import dto.UserDto;
+import helpers.RestHelper;
 import interceptors.testInterceptor;
 import models.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import security.*;
 
 @Stateless
@@ -63,7 +66,7 @@ public class UserResource {
     @GET
     @Interceptors(testInterceptor.class)
     @Path("/test")
-    public UserDto getRandom(@Context UriInfo uriInfo){
+    public UserDto getRandom(@Context UriInfo uriInfo) {
         Link self = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder())
                 .rel("self").type("GET").build();
         UserDto userDto = new UserDto();
@@ -71,35 +74,68 @@ public class UserResource {
         userDto.getLinks().add(self);
         return userDto;
     }
-    @GET
-    public Response all(@Context UriInfo uriInfo) {
-        List<User> users = userDao.getAll();
-        List<UserDto> userDtos = new ArrayList<>();
-        for(User user : users){
-            UserDto userDto = new UserDto(user,uriInfo);
-            userDtos.add(userDto);
-        }
-        return Response.ok(userDtos).build();
-    }
 
+//    /**
+//     *To:do remove
+//     */
+//    @GET
+//    @Secured
+//    public Response all(@HeaderParam(HttpHeaders.AUTHORIZATION) String AuthorizationHeader, @Context UriInfo uriInfo) {
+//        List<User> users = userDao.getAll();
+//        List<UserDto> userDtos = new ArrayList<>();
+//        for(User user : users){
+//            UserDto userDto = new UserDto(user,uriInfo);
+//            userDtos.add(userDto);
+//        }
+//        return Response.ok(userDtos).build();
+//    }
+
+    /**
+     * @param httpServletRequest
+     * @param uriInfo
+     * @return the created user as userDTO
+     */
     @POST
-    public UserDto save(User user, @Context UriInfo uriInfo) {
-        User new_user = userDao.save(user);
-        return new UserDto(new_user,uriInfo);
+    public Response save(@Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
+            List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
+            User new_user = userDao.save(new User(usernameAndPassword.get(0), usernameAndPassword.get(1)));
+            return Response.ok(new UserDto(new_user, uriInfo)).build();
+        }
+        return Response.status(400).build();
     }
 
+    /**
+     * This method updates the user
+     * The user can only update himself
+     */
     @PUT
-    public UserDto update(User user, @Context UriInfo uriInfo) {
-        User updated_user= userDao.update(user);
-        return new UserDto(updated_user,uriInfo);
-    }
+    @Secured
+    public Response update(UserDto userDto, @Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
+//            List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
+            RestHelper.getUsernameFromJWT(authorizationHeader.substring(authorizationHeader.indexOf(" ")));
+//            if (usernameAndPassword.get(0).equals(userDto.getName())) {
+//                User user = userDao.getUserByName(userDto.getName());
+//                user.setName(userDto.getName());
+//                user.setHoursPlayed(userDto.getHoursPlayed());
+//                user.setLevel(userDto.getLevel());
+//                User updated_user = userDao.update(user);
+//                return Response.ok(new UserDto(updated_user, uriInfo)).build();
+//            }
+        }
+        return Response.status(Response.Status.UNAUTHORIZED).build();
 
+    }
+    
     @GET
     @Secured
     @Path("{id}")
-    public UserDto getUser(@PathParam("id")Long id, @Context UriInfo uriInfo){
-        User found_user= userDao.find(id);
-        return new UserDto(found_user,uriInfo);
+    public UserDto getUser(@PathParam("id") Long id, @Context UriInfo uriInfo) {
+        User found_user = userDao.find(id);
+        return new UserDto(found_user, uriInfo);
     }
 
     @DELETE
@@ -108,6 +144,14 @@ public class UserResource {
     public void delete(@PathParam("id") Long id) {
         User user = userDao.find(id);
         userDao.delete(user);
+    }
+    @GET
+    @Secured
+    @Path("name/{name}")
+    public UserDto getUserByName(@PathParam("name") String name, @Context UriInfo uriInfo) {
+        User found_user = userDao.findUserByName(name);
+
+        return new UserDto(found_user, uriInfo);
     }
 
 }

@@ -2,7 +2,6 @@ package security;
 
 
 import javax.annotation.PostConstruct;
-import java.security.KeyPair;
 import java.security.SecureRandom;
 
 public class KeyManager {

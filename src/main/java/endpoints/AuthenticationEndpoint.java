@@ -5,6 +5,7 @@ import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import dao.UserDao;
+import helpers.RestHelper;
 import models.User;
 import security.KeyManager;
 
@@ -31,7 +32,7 @@ public class AuthenticationEndpoint {
     public Response authenticateUser(@Context HttpServletRequest httpServletRequest) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-            List<String> usernameAndPassword = getUsernameAndPassword(authorizationHeader);
+            List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
             if (usernameAndPassword.size() == 2) {
                 String username = usernameAndPassword.get(0);
                 String password = usernameAndPassword.get(1);
@@ -54,7 +55,7 @@ public class AuthenticationEndpoint {
                 .expirationTime(new Date(System.currentTimeMillis()+1800000))
                 .issueTime(new Date(System.currentTimeMillis()))
                 .claim("username", user.getName())
-                .claim("scope","users")
+                .claim("scope","User")
                 .build();
         JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256),
                 new Payload(claims.toJSONObject()));
@@ -66,15 +67,6 @@ public class AuthenticationEndpoint {
         return jwsObject.serialize();
     }
 
-    private List<String> getUsernameAndPassword(String authorizationHeader) {
-        int indexStartUsername = authorizationHeader.indexOf(" ");
-        int indexEndUsername = authorizationHeader.indexOf(":");
-        String username = authorizationHeader.substring(indexStartUsername,indexEndUsername);
-        String password = authorizationHeader.substring(indexEndUsername+1);
-        List<String> credentials = new ArrayList<>();
-        credentials.add(username);
-        credentials.add(password);
-        return credentials;
-    }
+
 }
 

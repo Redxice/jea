@@ -1,11 +1,16 @@
 package dao;
 
+import helpers.DoaHelper;
 import models.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -23,9 +28,14 @@ public class UserDao implements Serializable {
         return DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findOne", User.class).setParameter("id", id).getResultList());
     }
 
-    public User save(User user) {
+    public User save(User user){
+        try {
+            user.setPassword(encodeSHA256(user.getPassword()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         entityManager.persist(user);
-        return validate(user.getName(),user.getPassword());
+        return user;
     }
 
     public User update(User user) {
@@ -36,11 +46,29 @@ public class UserDao implements Serializable {
         entityManager.remove(user);
     }
 
-    public User validate(String username,String password){
+    public User validate(String name,String password){
+        String passwordEncoded = password;
+        try {
+            passwordEncoded = encodeSHA256(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         User user = DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.validate", User.class)
-                .setParameter("username",username)
-                .setParameter("password",password)
+                .setParameter("name",name)
+                .setParameter("password",passwordEncoded)
                 .getResultList());
         return user;
+
+    }
+    public User findUserByName(String username){
+        User user = DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findByName",User.class)
+        .setParameter("name",username)
+        .getResultList());
+        return user;
+    }
+    private static String encodeSHA256(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hash);
     }
 }

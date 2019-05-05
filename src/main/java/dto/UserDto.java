@@ -1,9 +1,11 @@
 package dto;
 
+import helpers.LinkAdapter;
 import models.User;
 
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriInfo;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +14,10 @@ public class UserDto {
 
     private long id;
     private String name;
-    private String password;
-    private String token;
+    private int level;
+    private int hoursPlayed;
+    @XmlElement(name = "link")
+    @XmlJavaTypeAdapter(LinkAdapter.class)
     private List<Link> links = new ArrayList<>();
 
     public UserDto(){}
@@ -21,11 +25,8 @@ public class UserDto {
     public UserDto(User user,UriInfo uriInfo) {
         this.id = user.getId();
         this.name = user.getName();
-        this.password = user.getPassword();
-        this.token = user.getToken();
         generateLinks(uriInfo,user);
     }
-
 
     private void generateLinks(UriInfo uriInfo, User user){
         Link self = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder())
@@ -60,20 +61,20 @@ public class UserDto {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public int getLevel() {
+        return level;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    public String getToken() {
-        return token;
+    public int getHoursPlayed() {
+        return hoursPlayed;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setHoursPlayed(int hoursPlayed) {
+        this.hoursPlayed = hoursPlayed;
     }
 
     public List<Link> getLinks() {

@@ -1,13 +1,19 @@
 import com.jayway.restassured.RestAssured;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 
 public class MessageTest {
+
     @BeforeClass
     public static void setup() {
         RestAssured.port = basicServerInfo.port;
