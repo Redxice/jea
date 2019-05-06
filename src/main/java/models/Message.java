@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -15,12 +18,16 @@ import java.io.Serializable;
 )
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@Embeddable
 public class Message implements Serializable {
     @Id
     @GeneratedValue
     private long id;
     private long userID;
     private String content;
+    private Date creationDate;
+    @ElementCollection
+    private List<Message> reactions = new ArrayList<>();
     public Message(){
 
     }
@@ -47,5 +54,21 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public List<Message> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<Message> reactions) {
+        this.reactions = reactions;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

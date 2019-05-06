@@ -29,7 +29,6 @@ public class MessageResource {
         Message message = new Message();
         message.setContent("dasf");
         MessageDto messageDto = new MessageDto(message);
-        messageDto.setUri("/messages/test");
         return messageDto;
     }
 

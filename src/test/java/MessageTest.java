@@ -10,15 +10,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.*;
 
 public class MessageTest {
+private static String token;
 
     @BeforeClass
-    public static void setup() {
+    public static void setup() throws IOException {
         RestAssured.port = basicServerInfo.port;
         RestAssured.basePath = basicServerInfo.basePath;
         RestAssured.baseURI = basicServerInfo.baseURI;
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(baseURI+":"+port+basePath+"users");
+        post.setHeader("Authorization","Bearer Henk:HenkPassword");
+        client.execute(post);
+        HttpPost postAuthorize = new HttpPost(baseURI+":"+port+basePath+"authentication");
+        postAuthorize.setHeader("Authorization","Bearer Henk:HenkPassword");
+        HttpResponse httpResponse = client.execute(postAuthorize);
+        token = httpResponse.getFirstHeader("Authorization").getValue();
     }
 
     @Test

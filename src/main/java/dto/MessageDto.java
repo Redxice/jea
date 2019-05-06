@@ -6,7 +6,7 @@ public class MessageDto {
     private long id;
     private long userID;
     private String content;
-    private String uri;
+
 
     public MessageDto(Message message){
         this.id = message.getId();
@@ -37,11 +37,4 @@ public class MessageDto {
         this.content = content;
     }
 
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
 }
