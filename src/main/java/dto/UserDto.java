@@ -22,9 +22,14 @@ public class UserDto {
 
     public UserDto(){}
 
-    public UserDto(User user,UriInfo uriInfo) {
+    public UserDto(User user){
         this.id = user.getId();
         this.name = user.getName();
+        this.level = user.getLevel();
+        this.hoursPlayed = user.getHoursPlayed();
+    }
+    public UserDto(User user,UriInfo uriInfo) {
+        this(user);
         generateLinks(uriInfo,user);
     }
 

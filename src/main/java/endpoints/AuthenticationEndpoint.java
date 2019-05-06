@@ -5,6 +5,7 @@ import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import dao.UserDao;
+import dto.UserDto;
 import helpers.RestHelper;
 import models.User;
 import security.KeyManager;
@@ -39,7 +40,7 @@ public class AuthenticationEndpoint {
                 User user = userDao.validate(username, password);
                 if (user != null) {
                     String token = generateToken(user);
-                    return Response.ok().header("Authorization","Bearer "+token).build();
+                    return Response.ok(new UserDto(user)).header("Authorization","Bearer "+token).build();
                 }
             }
         }

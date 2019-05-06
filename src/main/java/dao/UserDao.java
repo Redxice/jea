@@ -35,6 +35,7 @@ public class UserDao implements Serializable {
             e.printStackTrace();
         }
         entityManager.persist(user);
+        entityManager.flush();
         return user;
     }
 

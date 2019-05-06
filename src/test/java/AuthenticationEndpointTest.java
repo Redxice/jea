@@ -18,8 +18,11 @@ import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.*;
 
+/**
+ * think of a better way to test this class
+ */
 public class AuthenticationEndpointTest {
-    private static String token;
+
     @BeforeClass
     public static void setup()throws IOException {
         RestAssured.port = basicServerInfo.port;
@@ -30,14 +33,10 @@ public class AuthenticationEndpointTest {
         HttpPost post = new HttpPost(baseURI+":"+port+basePath+"users");
         post.setHeader("Authorization","Bearer Henk:HenkPassword");
         client.execute(post);
-//        HttpPost postAuthorize = new HttpPost(basicServerInfo.baseURI+basicServerInfo.basePath+"/authentication");
-//        postAuthorize.setHeader("Authorization","Bearer Henk:HenkPassword");
-//        HttpResponse httpResponse = client.execute(postAuthorize);
-//        token = httpResponse.getFirstHeader("Authorization").getValue();
     }
 
     @Test
-    public void postAuthorization() {
+    public void postAuthorizationTest() {
         given()
                 .contentType("application/json")
                 .header("Authorization","Bearer Henk:HenkPassword")
@@ -45,6 +44,26 @@ public class AuthenticationEndpointTest {
                 .post("authentication")
                 .then()
                 .statusCode(200);
+    }
+    @Test
+    public void postAuthorizationInvalidCredentialsTest() {
+        given()
+                .contentType("application/json")
+                .header("Authorization","Bearer Henk:a")
+                .when()
+                .post("authentication")
+                .then()
+                .statusCode(401);
+    }
+    @Test
+    public void postAuthorizationInvalidHeaderTest() {
+        given()
+                .contentType("application/json")
+                .header("Authorization","Basic Henk:a")
+                .when()
+                .post("authentication")
+                .then()
+                .statusCode(401);
     }
 
 }

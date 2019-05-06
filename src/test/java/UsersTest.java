@@ -1,4 +1,6 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
+import dto.UserDto;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -12,7 +14,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.*;
+import static com.jayway.restassured.RestAssured.basePath;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsersTest {
@@ -23,28 +26,25 @@ public class UsersTest {
         RestAssured.basePath = basicServerInfo.basePath;
         RestAssured.baseURI = basicServerInfo.baseURI;
         HttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(basicServerInfo.baseURI+basicServerInfo.basePath+"/users");
+        HttpPost post = new HttpPost(baseURI+":"+port+basePath+"users");
         post.setHeader("Authorization","Bearer Henk:HenkPassword");
         client.execute(post);
-        HttpPost postAuthorize = new HttpPost(basicServerInfo.baseURI+basicServerInfo.basePath+"/authentication");
+        HttpPost postAuthorize = new HttpPost(baseURI+":"+port+basePath+"authentication");
         postAuthorize.setHeader("Authorization","Bearer Henk:HenkPassword");
         HttpResponse httpResponse = client.execute(postAuthorize);
         token = httpResponse.getFirstHeader("Authorization").getValue();
     }
 
-//    @Test
-//    public void cgetAllUsersTest() {
-//        given().when().get("users").then().statusCode(200);
-//    }
 
     @Test
     public void aPostUserTest() {
         given()
                 .header("Authorization","Bearer test:password")
+                .contentType("application/json")
                 .when()
                 .post("users")
                 .then()
-                .statusCode(204);
+                .statusCode(200);
 
     }
 
@@ -52,12 +52,23 @@ public class UsersTest {
     public void bGetUserInvalidTest() {
         given()
                 .pathParam("id", 82521)
+                .contentType("application/json")
                 .when()
                 .get("users/{id}").
                 then()
-                .statusCode(500);
+                .statusCode(404);
     }
 
+    @Test
+    public void bPostUserExistingUserTest(){
+        given()
+                .header("Authorization","Bearer Henk:HenkPassword")
+                .contentType("application/json")
+                .when()
+                .post("users")
+                .then()
+                .statusCode(409);
+    }
     @Test
     public void bGetUserValidTest() {
         given()
@@ -71,23 +82,37 @@ public class UsersTest {
     @Test
     public void updateUserTest() {
         Map<String, String> user = new HashMap<>();
-        user.put("name", "test");
+        user.put("name", "Henk");
         user.put("lvl", "30");
         user.put("hoursPlayed","51");
         given()
                 .contentType("application/json")
+                .header("Authorization",token)
                 .body(user)
                 .when()
                 .put("users")
                 .then()
-                .statusCode(202);
-
+                .statusCode(200);
     }
 
     @Test
     public void zdeleteUserTest() {
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpPost postAuthorize = new HttpPost(baseURI+":"+port+basePath+"authentication");
+        postAuthorize.setHeader("Authorization","Bearer test:password");
+        String testToken = "";
+        UserDto userDto = null;
+        try {
+            HttpResponse httpResponse = client.execute(postAuthorize);
+            testToken = httpResponse.getFirstHeader("Authorization").getValue();
+            ObjectMapper mapper = new ObjectMapper();
+            userDto = mapper.readValue(httpResponse.getEntity().getContent(), UserDto.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         given()
-                .pathParam("id", 1)
+                .pathParam("id", userDto.getId())
+                .header("Authorization",testToken)
                 .when()
                 .delete("users/{id}").
                 then()

@@ -63,6 +63,7 @@ public class UserResource {
     @Inject
     private UserDao userDao;
 
+    // method to test an interceptor.
     @GET
     @Interceptors(testInterceptor.class)
     @Path("/test")
@@ -75,20 +76,19 @@ public class UserResource {
         return userDto;
     }
 
-//    /**
-//     *To:do remove
-//     */
-//    @GET
-//    @Secured
-//    public Response all(@HeaderParam(HttpHeaders.AUTHORIZATION) String AuthorizationHeader, @Context UriInfo uriInfo) {
-//        List<User> users = userDao.getAll();
-//        List<UserDto> userDtos = new ArrayList<>();
-//        for(User user : users){
-//            UserDto userDto = new UserDto(user,uriInfo);
-//            userDtos.add(userDto);
-//        }
-//        return Response.ok(userDtos).build();
-//    }
+    /**
+     * Not secured since there is no sensitive content in UserDto
+     */
+    @GET
+    public Response all(@HeaderParam(HttpHeaders.AUTHORIZATION) String AuthorizationHeader, @Context UriInfo uriInfo) {
+        List<User> users = userDao.getAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : users) {
+            UserDto userDto = new UserDto(user, uriInfo);
+            userDtos.add(userDto);
+        }
+        return Response.ok(userDtos).build();
+    }
 
     /**
      * @param httpServletRequest
@@ -97,12 +97,18 @@ public class UserResource {
      */
     @POST
     public Response save(@Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo) {
+
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-            List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
-            User new_user = userDao.save(new User(usernameAndPassword.get(0), usernameAndPassword.get(1)));
-            return Response.ok(new UserDto(new_user, uriInfo)).build();
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
+                List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
+                User new_user = userDao.save(new User(usernameAndPassword.get(0), usernameAndPassword.get(1)));
+                return Response.ok(new UserDto(new_user, uriInfo)).build();
+            }
+        } catch (Exception e) {
+            return Response.status(409).build();
         }
+
         return Response.status(400).build();
     }
 
@@ -115,43 +121,55 @@ public class UserResource {
     public Response update(UserDto userDto, @Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-//            List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
-            RestHelper.getUsernameFromJWT(authorizationHeader.substring(authorizationHeader.indexOf(" ")));
-//            if (usernameAndPassword.get(0).equals(userDto.getName())) {
-//                User user = userDao.getUserByName(userDto.getName());
-//                user.setName(userDto.getName());
-//                user.setHoursPlayed(userDto.getHoursPlayed());
-//                user.setLevel(userDto.getLevel());
-//                User updated_user = userDao.update(user);
-//                return Response.ok(new UserDto(updated_user, uriInfo)).build();
-//            }
+            String name = RestHelper.getUsernameFromJWT(authorizationHeader.substring(authorizationHeader.indexOf(" ")));
+            if (name.equals(userDto.getName())) {
+                User user = userDao.findUserByName(name);
+                user.setName(userDto.getName());
+                user.setHoursPlayed(userDto.getHoursPlayed());
+                user.setLevel(userDto.getLevel());
+                User updated_user = userDao.update(user);
+                return Response.ok(new UserDto(updated_user, uriInfo)).build();
+            }
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
 
     }
-    
+
     @GET
-    @Secured
     @Path("{id}")
-    public UserDto getUser(@PathParam("id") Long id, @Context UriInfo uriInfo) {
+    public Response getUser(@PathParam("id") Long id, @Context UriInfo uriInfo) {
         User found_user = userDao.find(id);
-        return new UserDto(found_user, uriInfo);
+        if (found_user != null) {
+            return Response.ok(new UserDto(found_user, uriInfo)).build();
+        }
+        return Response.status(404).build();
     }
 
     @DELETE
     @Secured
     @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
-        User user = userDao.find(id);
-        userDao.delete(user);
+    public Response delete(@Context HttpServletRequest httpServletRequest, @PathParam("id") Long id) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
+            String name = RestHelper.getUsernameFromJWT(authorizationHeader.substring(authorizationHeader.indexOf(" ")));
+            Long id_user = userDao.findUserByName(name).getId();
+            if (id_user.equals(id)) {
+                User user = userDao.find(id);
+                userDao.delete(user);
+                return Response.noContent().build();
+            }
+        }
+        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
-    @GET
-    @Secured
-    @Path("name/{name}")
-    public UserDto getUserByName(@PathParam("name") String name, @Context UriInfo uriInfo) {
-        User found_user = userDao.findUserByName(name);
 
-        return new UserDto(found_user, uriInfo);
+        @GET
+        @Path("name/{name}")
+        public Response getUserByName (@PathParam("name") String name) {
+            User found_user = userDao.findUserByName(name);
+            if (found_user != null) {
+                return Response.ok(new UserDto(found_user)).build();
+            }
+            return Response.status(404).build();
+        }
+
     }
-
-}

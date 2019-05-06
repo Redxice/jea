@@ -8,31 +8,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3175d62-a188-41de-b448-0e19926ae2b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/helpers/LinkAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/helpers/RestHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DoaHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/helpers/DoaHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/beans/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/beans/UserBean.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/UserDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dto/UsersDto.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/endpoints/UserResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/endpoints/UserResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/helpers/RestHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/helpers/RestHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interceptors/testInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interceptors/testInterceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/security/KeyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/security/KeyManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/AuthorizationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/MessageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/UserRoles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/UsersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/UsersTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/DoaHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dto/UserDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/UserDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dto/UsersDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/endpoints/AuthenticationEndpoint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/endpoints/AuthenticationEndpoint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/beans/UserBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/beans/UserBean.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/endpoints/UserResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/endpoints/UserResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/interceptors/testInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interceptors/testInterceptor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/security/AuthenticationFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/security/AuthenticationFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/security/KeyManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/security/KeyManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/MessageTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/MessageTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/UsersTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/UsersTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/endpoints/UserResource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1370">
-              <caret line="131" column="4" lean-forward="true" selection-start-line="131" selection-start-column="4" selection-end-line="131" selection-end-column="4" />
+            <state relative-caret-position="199">
+              <caret line="158" selection-start-line="158" selection-end-line="158" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="63" column="39" lean-forward="true" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+            <state relative-caret-position="266">
+              <caret line="37" column="30" lean-forward="true" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -84,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/UsersTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+            <state relative-caret-position="331">
+              <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,25 +84,26 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="17">
               <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#495#496#0" expanded="true" />
-                <element signature="e#568#569#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/basicServerInfo.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+            <state relative-caret-position="75">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -119,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dto/UserDto.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-614">
-              <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+            <state relative-caret-position="174">
+              <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1904#1905#0" expanded="true" />
@@ -136,11 +128,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+            <state relative-caret-position="470">
+              <caret line="55" column="30" selection-start-line="55" selection-start-column="30" selection-end-line="55" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -149,22 +141,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/runners/model/FrameworkMethod.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/models/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="-141">
+              <caret line="56" column="15" lean-forward="true" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
               <folding>
-                <element signature="e#1657#1658#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -172,8 +155,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-262">
-              <caret line="23" column="21" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="21" />
+            <state relative-caret-position="-85">
+              <caret line="42" column="77" selection-start-line="42" selection-start-column="77" selection-end-line="42" selection-end-column="77" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -206,6 +189,10 @@
       <find>swagg</find>
       <find>swag</find>
       <find>swagger</find>
+      <find>system</find>
+      <find>sy</find>
+      <find>system.</find>
+      <find>passwor</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -237,7 +224,6 @@
         <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/dao/MessageDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/DoaHelper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/beans/UserBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/swaggerApp.java" />
         <option value="$PROJECT_DIR$/src/main/java/security/CorsFilter.java" />
         <option value="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -245,29 +231,30 @@
         <option value="$APPLICATION_CONFIG_DIR$/scratches/rest-api_1.http" />
         <option value="$PROJECT_DIR$/src/main/java/endpoints/MessageResource.java" />
         <option value="$PROJECT_DIR$/src/main/java/models/Message.java" />
-        <option value="$PROJECT_DIR$/src/main/java/interceptors/testInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/dto/MessageDto.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ApplicationConfig.java" />
         <option value="$PROJECT_DIR$/web/index.xhtml" />
         <option value="$PROJECT_DIR$/web/test.xhtml" />
-        <option value="$PROJECT_DIR$/src/test/java/basicServerInfo.java" />
         <option value="$PROJECT_DIR$/src/main/java/UserRoles.java" />
         <option value="$PROJECT_DIR$/src/main/java/security/KeyManager.java" />
         <option value="$PROJECT_DIR$/src/test/java/AuthorizationTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/helpers/DoaHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java" />
         <option value="$PROJECT_DIR$/src/main/java/helpers/LinkAdapter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dto/UserDto.java" />
-        <option value="$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java" />
         <option value="$PROJECT_DIR$/src/main/java/dto/UsersDto.java" />
-        <option value="$PROJECT_DIR$/src/main/java/helpers/RestHelper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/models/User.java" />
         <option value="$PROJECT_DIR$/src/test/java/MessageTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/UserDao.java" />
-        <option value="$PROJECT_DIR$/src/test/java/UsersTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/endpoints/UserResource.java" />
+        <option value="$PROJECT_DIR$/src/main/java/interceptors/testInterceptor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/beans/UserBean.java" />
         <option value="$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/models/User.java" />
+        <option value="$PROJECT_DIR$/src/main/java/helpers/RestHelper.java" />
+        <option value="$PROJECT_DIR$/src/test/java/basicServerInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/UserDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dto/UserDto.java" />
+        <option value="$PROJECT_DIR$/src/main/java/endpoints/UserResource.java" />
+        <option value="$PROJECT_DIR$/src/test/java/UsersTest.java" />
       </list>
     </option>
   </component>
@@ -302,8 +289,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="684" />
-    <option name="y" value="26" />
+    <option name="x" value="902" />
+    <option name="y" value="170" />
     <option name="width" value="940" />
     <option name="height" value="945" />
   </component>
@@ -315,6 +302,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -416,7 +404,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -424,7 +411,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557082048879" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557130792174" />
     <property name="dynamic.classpath" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/AngularJS Bier Demo/BierDemoAngular" />
     <property name="nodejs_interpreter_path" value="node" />
@@ -568,13 +555,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.AuthenticationEndpointTest">
-    <configuration name="rest-api#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http">
-      <method v="2" />
-    </configuration>
-    <configuration name="rest-api_1#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api_1.http">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="JUnit.UsersTest">
     <configuration name="AuthenticationEndpointTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jea" />
       <option name="PACKAGE_NAME" value="" />
@@ -593,11 +574,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UsersTest.getUserValidTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="jea" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="UsersTest" />
-      <option name="METHOD_NAME" value="getUserValidTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UsersTest.aPostUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="jea" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="UsersTest" />
+      <option name="METHOD_NAME" value="aPostUserTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -613,21 +603,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UsersTest.zdeleteUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="jea" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="UsersTest" />
+      <option name="METHOD_NAME" value="zdeleteUserTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="GlassFish Server.payara" />
-      <item itemvalue="HTTP Request.rest-api#1" />
-      <item itemvalue="HTTP Request.rest-api_1#1" />
       <item itemvalue="JUnit.UserEndpointTest" />
-      <item itemvalue="JUnit.UsersTest.getUserValidTest" />
       <item itemvalue="JUnit.UsersTest.updateUserTest" />
       <item itemvalue="JUnit.AuthenticationEndpointTest" />
+      <item itemvalue="JUnit.UsersTest" />
+      <item itemvalue="JUnit.UsersTest.aPostUserTest" />
+      <item itemvalue="JUnit.UsersTest.zdeleteUserTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UsersTest" />
+        <item itemvalue="JUnit.UsersTest.zdeleteUserTest" />
+        <item itemvalue="JUnit.UsersTest.aPostUserTest" />
         <item itemvalue="JUnit.AuthenticationEndpointTest" />
-        <item itemvalue="HTTP Request.rest-api_1#1" />
-        <item itemvalue="HTTP Request.rest-api#1" />
-        <item itemvalue="JUnit.UsersTest.getUserValidTest" />
         <item itemvalue="JUnit.UsersTest.updateUserTest" />
       </list>
     </recent_temporary>
@@ -686,44 +686,46 @@
       <workItem from="1555406678248" duration="623000" />
       <workItem from="1556798015316" duration="614000" />
       <workItem from="1556983758641" duration="6743000" />
-      <workItem from="1557044977647" duration="18623000" />
+      <workItem from="1557044977647" duration="18867000" />
+      <workItem from="1557116309310" duration="1166000" />
+      <workItem from="1557120249196" duration="10317000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="UsersTest_getUserInvalidTest - 2019.02.28 at 08h 54m 34s.xml">
-      <configuration name="UsersTest.getUserInvalidTest" configurationId="JUnit" />
+    <history-entry file="UsersTest - 2019.05.06 at 09h 39m 43s.xml">
+      <configuration name="UsersTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UsersTest_updateUserTest - 2019.02.28 at 08h 56m 38s.xml">
-      <configuration name="UsersTest.updateUserTest" configurationId="JUnit" />
+    <history-entry file="UsersTest_zdeleteUserTest - 2019.05.06 at 09h 43m 53s.xml">
+      <configuration name="UsersTest.zdeleteUserTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UsersTest_getUserValidTest - 2019.02.28 at 08h 57m 00s.xml">
-      <configuration name="UsersTest.getUserValidTest" configurationId="JUnit" />
+    <history-entry file="UsersTest - 2019.05.06 at 09h 44m 05s.xml">
+      <configuration name="UsersTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 37m 44s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest_zdeleteUserTest - 2019.05.06 at 09h 44m 34s.xml">
+      <configuration name="UsersTest.zdeleteUserTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 38m 14s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest_zdeleteUserTest - 2019.05.06 at 09h 44m 51s.xml">
+      <configuration name="UsersTest.zdeleteUserTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 39m 17s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest_zdeleteUserTest - 2019.05.06 at 09h 45m 46s.xml">
+      <configuration name="UsersTest.zdeleteUserTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 39m 54s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest - 2019.05.06 at 09h 46m 06s.xml">
+      <configuration name="UsersTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 41m 56s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest - 2019.05.06 at 10h 01m 41s.xml">
+      <configuration name="UsersTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 45m 03s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest - 2019.05.06 at 10h 03m 01s.xml">
+      <configuration name="UsersTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AuthenticationEndpointTest - 2019.05.05 at 20h 47m 04s.xml">
-      <configuration name="AuthenticationEndpointTest" configurationId="JUnit" />
+    <history-entry file="UsersTest - 2019.05.06 at 10h 19m 17s.xml">
+      <configuration name="UsersTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148219000" />
+    <option name="totallyTimeSpent" value="159946000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -738,7 +740,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49896482" visible="true" weight="0.15671642" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49896482" visible="true" weight="0.15991472" />
       <window_info id="Structure" order="1" sideWeight="0.5010352" side_tool="true" weight="0.14925373" />
       <window_info id="Designer" order="2" />
       <window_info id="Persistence" order="3" side_tool="true" />
@@ -752,22 +754,22 @@
       <window_info anchor="bottom" id="REST Client" order="0" weight="0.4287293" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49781182" weight="0.32822758" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.7818792" weight="0.48212352" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" sideWeight="0.8632385" visible="true" weight="0.5254605" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.7771855" visible="true" weight="0.07042254" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.85820895" weight="0.36403033" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.4986577" weight="0.3286119" />
-      <window_info anchor="bottom" id="Application Servers" order="8" sideWeight="0.4950927" weight="0.3281768" />
+      <window_info anchor="bottom" id="Application Servers" order="8" sideWeight="0.4946695" weight="0.32719395" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49945474" weight="0.32928178" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.13676149" side_tool="true" weight="0.6280087" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.2228145" side_tool="true" visible="true" weight="0.07042254" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.48687088" weight="0.29252437" />
       <window_info anchor="bottom" id="Java Enterprise" order="13" weight="0.3286119" />
       <window_info anchor="bottom" id="Database Changes" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="15" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24966443" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24946696" />
       <window_info anchor="right" id="Maven" order="3" weight="0.6366158" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
@@ -792,66 +794,15 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/endpoints/MessageResource.java</url>
-          <line>28</line>
-          <properties />
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/helpers/RestHelper.java</url>
-          <line>22</line>
-          <properties />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/endpoints/UserResource.java</url>
-          <line>118</line>
+          <line>153</line>
           <properties />
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java</url>
-          <line>32</line>
-          <properties />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java</url>
-          <line>28</line>
-          <properties />
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/UsersTest.java</url>
-          <line>72</line>
-          <properties />
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java</url>
-          <line>40</line>
-          <properties />
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java</url>
-          <line>24</line>
-          <properties />
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java</url>
-          <line>30</line>
-          <properties />
-          <option name="timeStamp" value="35" />
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-core/1.9/jersey-core-1.9-sources.jar!/javax/ws/rs/core/Response.java" />
-    <entry file="jar://$MAVEN_REPOSITORY$/io/jsonwebtoken/jjwt-api/0.10.5/jjwt-api-0.10.5.jar!/io/jsonwebtoken/JwtParser.class" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/swaggerApp.java" />
     <entry file="jar://$USER_HOME$/Desktop/server/payara5/glassfish/modules/weld-osgi-bundle.jar!/org/jboss/weld/bean/proxy/ProxyMethodHandler.class" />
     <entry file="file://$PROJECT_DIR$/jea.iml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -952,23 +903,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/interceptors/testInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/MessageDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" column="71" selection-start-line="15" selection-start-column="64" selection-end-line="15" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/models/Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -993,34 +927,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="58" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/endpoints/MessageResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#452#453#0" expanded="true" />
-            <element signature="e#494#495#0" expanded="true" />
-            <element signature="e#819#820#0" expanded="true" />
-            <element signature="e#859#860#0" expanded="true" />
-            <element signature="e#911#912#0" expanded="true" />
-            <element signature="e#953#954#0" expanded="true" />
-            <element signature="e#1037#1038#0" expanded="true" />
-            <element signature="e#1079#1080#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/beans/UserBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="42" column="3" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1094,40 +1000,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/helpers/RestHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/dto/UsersDto.java" />
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/runners/model/FrameworkMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+        <state relative-caret-position="697">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/interceptors/testInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/MessageDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="67" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/User.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/dto/MessageDto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="56" column="15" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
+        <state relative-caret-position="-103">
+          <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/endpoints/MessageResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3219#3220#0" expanded="true" />
-            <element signature="e#3247#3248#0" expanded="true" />
-            <element signature="e#3337#3338#0" expanded="true" />
-            <element signature="e#3365#3366#0" expanded="true" />
-            <element signature="e#3404#3405#0" expanded="true" />
-            <element signature="e#3438#3439#0" expanded="true" />
-            <element signature="e#3473#3474#0" expanded="true" />
-            <element signature="e#3507#3508#0" expanded="true" />
-            <element signature="e#3558#3559#0" expanded="true" />
-            <element signature="e#3604#3605#0" expanded="true" />
+            <element signature="e#452#453#0" expanded="true" />
+            <element signature="e#494#495#0" expanded="true" />
+            <element signature="e#819#820#0" expanded="true" />
+            <element signature="e#859#860#0" expanded="true" />
+            <element signature="e#911#912#0" expanded="true" />
+            <element signature="e#953#954#0" expanded="true" />
+            <element signature="e#1037#1038#0" expanded="true" />
+            <element signature="e#1079#1080#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dto/UsersDto.java">
+    <entry file="jar://$PROJECT_DIR$/lib/javax.persistence.jar!/javax/persistence/TypedQuery.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        <state relative-caret-position="119">
+          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/beans/UserBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1138,27 +1081,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/helpers/RestHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="136">
+          <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dto/MessageDto.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/basicServerInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        <state relative-caret-position="51">
+          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Desktop/server/payara5/glassfish/modules/weld-osgi-bundle.jar!/org/jboss/weld/module/ejb/AbstractEJBRequestScopeActivationInterceptor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Desktop/server/payara5/glassfish/modules/weld-osgi-bundle.jar!/org/jboss/weld/module/ejb/SessionBeanInterceptor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="37" column="30" lean-forward="true" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/security/AuthenticationFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/endpoints/AuthenticationEndpoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-262">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="21" />
+        <state relative-caret-position="-85">
+          <caret line="42" column="77" selection-start-line="42" selection-start-column="77" selection-end-line="42" selection-end-column="77" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1167,8 +1141,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dto/UserDto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-614">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        <state relative-caret-position="174">
+          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1904#1905#0" expanded="true" />
@@ -1183,73 +1157,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/models/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="63" column="39" lean-forward="true" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+        <state relative-caret-position="-141">
+          <caret line="56" column="15" lean-forward="true" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/endpoints/UserResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1370">
-          <caret line="131" column="4" lean-forward="true" selection-start-line="131" selection-start-column="4" selection-end-line="131" selection-end-column="4" />
+        <state relative-caret-position="199">
+          <caret line="158" selection-start-line="158" selection-end-line="158" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#495#496#0" expanded="true" />
-            <element signature="e#568#569#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/basicServerInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/UsersTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+        <state relative-caret-position="331">
+          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/runners/model/FrameworkMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
-          <folding>
-            <element signature="e#1657#1658#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/AuthenticationEndpointTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+        <state relative-caret-position="470">
+          <caret line="55" column="30" selection-start-line="55" selection-start-column="30" selection-end-line="55" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

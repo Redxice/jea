@@ -27,13 +27,6 @@ public class UserBean implements Serializable {
 
     private UIComponent loginBtn;
 
-//    @POST
-//    @Path("create")
-//    @Consumes("application/json")
-//    public void createPerson(Person person){
-//        System.out.println(person);
-//        personDao.save(person);
-//    }
 
     public List<User> getAllUsers(){
         return userDao.getAll();

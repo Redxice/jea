@@ -51,7 +51,7 @@ import java.util.List;
         @NamedQuery(name = "User.findOne", query = "select u from User u where u.id = :id"),
         @NamedQuery(name = "User.getAll", query = "select u from User u"),
         @NamedQuery(name ="User.validate", query = "select u from User u where u.password = :password and u.name= :name"),
-        @NamedQuery(name ="User.findByName", query = "select u from User u where  u.name= :name")
+        @NamedQuery(name ="User.findByName", query = "select u from User u where  u.name = :name")
     }
 )
 @XmlRootElement

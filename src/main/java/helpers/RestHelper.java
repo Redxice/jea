@@ -1,7 +1,6 @@
 package helpers;
 
 import com.nimbusds.jose.JWSObject;
-import models.UserRoles;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class RestHelper {
     public static List<String> getUsernameAndPassword(String authorizationHeader) {
-        int indexStartUsername = authorizationHeader.indexOf(" ");
+        int indexStartUsername = authorizationHeader.indexOf(" ")+1;
         int indexEndUsername = authorizationHeader.indexOf(":");
         String username = authorizationHeader.substring(indexStartUsername,indexEndUsername);
         String password = authorizationHeader.substring(indexEndUsername+1);
@@ -21,7 +20,7 @@ public class RestHelper {
     public static String getUsernameFromJWT(String jwt){
         try {
             JWSObject jwsObject = JWSObject.parse(jwt);
-
+            return jwsObject.getPayload().toJSONObject().getAsString("username").trim();
         } catch (ParseException e) {
             e.printStackTrace();
         }
