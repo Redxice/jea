@@ -1,4 +1,4 @@
-package security;
+package endpoints.security;
 
 
 import javax.annotation.PostConstruct;

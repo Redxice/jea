@@ -8,7 +8,7 @@ import dao.UserDao;
 import dto.UserDto;
 import helpers.RestHelper;
 import models.User;
-import security.KeyManager;
+import endpoints.security.KeyManager;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,7 +17,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

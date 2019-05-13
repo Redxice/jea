@@ -36,23 +36,22 @@ package endpoints;/*
  * holder.
  */
 
-import com.sun.jndi.toolkit.url.Uri;
+import javax.inject.Inject;
 import dao.UserDao;
 import dto.UserDto;
+import endpoints.security.Secured;
 import helpers.RestHelper;
-import interceptors.testInterceptor;
+import endpoints.interceptors.testInterceptor;
 import models.User;
-
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+
+
 import java.util.ArrayList;
 import java.util.List;
-
-import security.*;
 
 @Stateless
 @Path("users")
@@ -80,7 +79,7 @@ public class UserResource {
      * Not secured since there is no sensitive content in UserDto
      */
     @GET
-    public Response all(@HeaderParam(HttpHeaders.AUTHORIZATION) String AuthorizationHeader, @Context UriInfo uriInfo) {
+    public Response all(@Context UriInfo uriInfo) {
         List<User> users = userDao.getAll();
         List<UserDto> userDtos = new ArrayList<>();
         for (User user : users) {
@@ -121,7 +120,7 @@ public class UserResource {
     public Response update(UserDto userDto, @Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-            String name = RestHelper.getUsernameFromJWT(authorizationHeader.substring(authorizationHeader.indexOf(" ")));
+            String name = RestHelper.getUsernameFromJWT(authorizationHeader);
             if (name.equals(userDto.getName())) {
                 User user = userDao.findUserByName(name);
                 user.setName(userDto.getName());
@@ -151,7 +150,7 @@ public class UserResource {
     public Response delete(@Context HttpServletRequest httpServletRequest, @PathParam("id") Long id) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-            String name = RestHelper.getUsernameFromJWT(authorizationHeader.substring(authorizationHeader.indexOf(" ")));
+            String name = RestHelper.getUsernameFromJWT(authorizationHeader);
             Long id_user = userDao.findUserByName(name).getId();
             if (id_user.equals(id)) {
                 User user = userDao.find(id);

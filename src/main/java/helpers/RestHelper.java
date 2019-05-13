@@ -17,7 +17,8 @@ public class RestHelper {
         credentials.add(password);
         return credentials;
     }
-    public static String getUsernameFromJWT(String jwt){
+    public static String getUsernameFromJWT(String authorizationHeader){
+        String jwt = authorizationHeader.substring(authorizationHeader.indexOf(" "));
         try {
             JWSObject jwsObject = JWSObject.parse(jwt);
             return jwsObject.getPayload().toJSONObject().getAsString("username").trim();

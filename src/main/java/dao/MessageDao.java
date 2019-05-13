@@ -3,11 +3,12 @@ package dao;
 import models.Message;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class MessageDao {
     @PersistenceContext(unitName = "myUnit")
     private EntityManager entityManager;

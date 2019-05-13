@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,7 +52,8 @@ import java.util.List;
         @NamedQuery(name = "User.findOne", query = "select u from User u where u.id = :id"),
         @NamedQuery(name = "User.getAll", query = "select u from User u"),
         @NamedQuery(name ="User.validate", query = "select u from User u where u.password = :password and u.name= :name"),
-        @NamedQuery(name ="User.findByName", query = "select u from User u where  u.name = :name")
+        @NamedQuery(name ="User.findByName", query = "select u from User u where  u.name = :name"),
+        @NamedQuery(name ="User.deleteById", query = "delete from User u where  u.id = :id")
     }
 )
 @XmlRootElement
@@ -66,7 +68,10 @@ public class User {
     private String password;
     private int level;
     private int hoursPlayed;
-
+    @OneToMany(mappedBy="owner", orphanRemoval=true)
+    private List<Forum> forums = new ArrayList<>();
+    @OneToMany(mappedBy="owner", orphanRemoval=true)
+    private List<Message> messages = new ArrayList<>();
     public User() {
     }
 
@@ -118,5 +123,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Forum> getForums() {
+        return forums;
+    }
+
+    public void setForums(List<Forum> forums) {
+        this.forums = forums;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

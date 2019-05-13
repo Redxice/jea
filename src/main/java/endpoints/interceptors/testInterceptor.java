@@ -1,4 +1,4 @@
-package interceptors;
+package endpoints.interceptors;
 
 import dto.UserDto;
 

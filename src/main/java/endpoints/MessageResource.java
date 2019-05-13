@@ -28,7 +28,7 @@ public class MessageResource {
     public MessageDto message() {
         Message message = new Message();
         message.setContent("dasf");
-        MessageDto messageDto = new MessageDto(message);
+        MessageDto messageDto = new MessageDto();
         return messageDto;
     }
 

@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="jea-1.0-SNAPSHOT.war">
+    <root id="archive" name="JEA.war">
       <element id="artifact" artifact-name="jea:war exploded" />
     </root>
   </artifact>

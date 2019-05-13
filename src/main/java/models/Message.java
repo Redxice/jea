@@ -3,7 +3,6 @@ package models;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,18 +15,18 @@ import java.util.List;
         @NamedQuery(name = "models.Message.getAll", query = "select m from Message m")
 }
 )
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@Embeddable
 public class Message implements Serializable {
     @Id
     @GeneratedValue
-    private long id;
-    private long userID;
+    private Long id;
+    @ManyToOne
+    private User owner;
     private String content;
     private Date creationDate;
-    @ElementCollection
+    @OneToMany(orphanRemoval=true)
     private List<Message> reactions = new ArrayList<>();
+    @ManyToOne
+    private Forum forum;
     public Message(){
 
     }
@@ -38,14 +37,6 @@ public class Message implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(long userID) {
-        this.userID = userID;
     }
 
     public String getContent() {
@@ -70,5 +61,25 @@ public class Message implements Serializable {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Forum getForum() {
+        return forum;
+    }
+
+    public void setForum(Forum forum) {
+        this.forum = forum;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

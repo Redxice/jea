@@ -2,7 +2,7 @@ package helpers;
 
 import java.util.List;
 
-public class DoaHelper {
+public class DaoHelper {
     /*
         This method is used to prevent the error you get when u use the getSingleResult method from the entityManager.
      */

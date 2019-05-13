@@ -2,20 +2,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
+import dao.ForumDao;
+import dao.UserDao;
+import dto.ForumDto;
 import dto.UserDto;
 import models.Forum;
+import models.User;
 import net.minidev.json.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.SerializableEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -35,6 +44,7 @@ public class ForumEndpointTest {
     private static String token;
     private static Long userID;
     private static Long forumID;
+    private static ForumDto forumDto;
 
     @BeforeClass
     public static void setup() throws IOException {
@@ -63,17 +73,24 @@ public class ForumEndpointTest {
 
         HttpPost postForum = new HttpPost(baseURI + ":" + port + basePath + "forums");
         postForum.setHeader("Authorization", token);
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum");
+        forumDto = new ForumDto();
+        forumDto.setOwner_id(userID);
+        forumDto.setTag("#Hunting");
+        forumDto.setTitle("testHuntingForum");
         Gson gson = new Gson();
-        postForum.setEntity(new StringEntity(gson.toJson(forum)));
+        StringEntity requestEntity = new StringEntity(
+                gson.toJson(forumDto),
+                ContentType.APPLICATION_JSON);
+        postForum.setEntity(requestEntity);
         HttpResponse response = client.execute(postForum);
         mapper = new ObjectMapper();
-        forumID = mapper.readValue(response.getEntity().getContent(), Forum.class).getId();
+        forumDto = mapper.readValue(response.getEntity().getContent(), ForumDto.class);
+        forumID = forumDto.getId();
     }
 
     @Test
     public void postForumTest() {
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum");
+        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum",null);
         given()
                 .header("Authorization", token)
                 .contentType("application/json")
@@ -91,7 +108,7 @@ public class ForumEndpointTest {
 
     @Test
     public void postForumWithoutToken() {
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum");
+        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum",null);
 
         given()
                 .contentType("application/json")
@@ -159,7 +176,7 @@ public class ForumEndpointTest {
      */
     @Test
     public void updateForum() {
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#newTag","testHuntingForum");
+        Map<String, String> forum = createForumMap(String.valueOf(userID),"#newTag","testHuntingForum",forumID);
         given()
                 .header("Authorization", token)
                 .contentType("application/json")
@@ -175,23 +192,22 @@ public class ForumEndpointTest {
 
     @Test
     public void updateForumWithoutToken() {
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum");
+        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum",forumID);
         given()
                 .contentType("application/json")
-                .pathParam("id", forumID)
                 .content(forum)
                 .when()
-                .put("forums")
+                .put("/"+forumID)
                 .then()
                 .statusCode(401);
     }
 
     @Test
     public void updateNonExistingForum() {
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum");
+        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum",51231253513L);
         given()
                 .contentType("application/json")
-                .pathParam("id", 942394)
+                .header("Authorization",token)
                 .content(forum)
                 .when()
                 .put("forums")
@@ -205,31 +221,13 @@ public class ForumEndpointTest {
      */
     @Test
     public void updateForumNotOwner() throws IOException {
-
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(baseURI + ":" + port + basePath + "users");
-        post.setHeader("Authorization", "Bearer bert:Password");
-        client.execute(post);
-
-        HttpPost postAuthorize = new HttpPost(baseURI + ":" + port + basePath + "authentication");
-        postAuthorize.setHeader("Authorization", "Bearer bert:Password");
-        HttpResponse httpResponse = client.execute(postAuthorize);
-        String token = httpResponse.getFirstHeader("Authorization").getValue();
-
-        HttpPost postForum = new HttpPost(baseURI + ":" + port + basePath + "forums");
-        postAuthorize.setHeader("Forum", token);
-        HttpResponse response = client.execute(postForum);
-        ObjectMapper mapper = new ObjectMapper();
-        Long forumID = mapper.readValue(response.getEntity().getContent(), Forum.class).getId();
-
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#Hunting","testHuntingForum");
-
+        String token2 = createUserAndGetToken("Piet");
         given()
                 .contentType("application/json")
-                .pathParam("id", forumID)
-                .content(forum)
+                .header("Authorization",token2)
+                .content(forumDto)
                 .when()
-                .post("forums")
+                .put("forums")
                 .then()
                 .statusCode(401);
     }
@@ -238,11 +236,10 @@ public class ForumEndpointTest {
     public void deleteForum() throws IOException {
         Long id = createForum();
         given()
-                .header("Authorization", token)
                 .contentType("application/json")
-                .pathParam("id", id)
+                .header("Authorization", token)
                 .when()
-                .delete("forums")
+                .delete("/"+id)
                 .then()
                 .assertThat()
                 .statusCode(204);
@@ -252,9 +249,8 @@ public class ForumEndpointTest {
     public void deleteForumWithoutToken() {
         given()
                 .contentType("application/json")
-                .pathParam("id", forumID)
                 .when()
-                .delete("forums")
+                .delete("/"+forumID)
                 .then()
                 .assertThat()
                 .statusCode(401);
@@ -265,9 +261,8 @@ public class ForumEndpointTest {
         given()
                 .header("Authorization", token)
                 .contentType("application/json")
-                .pathParam("id", 999999)
                 .when()
-                .delete("forums")
+                .delete("/"+999999)
                 .then()
                 .assertThat()
                 .statusCode(404);
@@ -300,23 +295,30 @@ public class ForumEndpointTest {
                 .statusCode(200);
     }
 
-    private static Map<String, String> createForumMap(String ownerID, String tag, String title) {
+    private static Map<String, String> createForumMap(String ownerID, String tag, String title,Long id) {
         Map<String, String> forum = new HashMap<>();
         forum.put("ownerID", ownerID);
         forum.put("tag", tag);
         forum.put("title", title);
+        forum.put("id",String.valueOf(id));
         return forum;
     }
     private Long createForum() throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost postForum = new HttpPost(baseURI + ":" + port + basePath + "forums");
         postForum.setHeader("Authorization", token);
-        Map<String, String> forum = createForumMap(String.valueOf(userID),"#adsf","adfsfs");
+        ForumDto forumDto = new ForumDto();
+        forumDto.setOwner_id(userID);
+        forumDto.setTag("#Hunting");
+        forumDto.setTitle("testHuntingForum");
         Gson gson = new Gson();
-        postForum.setEntity(new StringEntity(gson.toJson(forum)));
+        StringEntity requestEntity = new StringEntity(
+                gson.toJson(forumDto),
+                ContentType.APPLICATION_JSON);
+        postForum.setEntity(requestEntity);
         HttpResponse response = client.execute(postForum);
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(response.getEntity().getContent(), Forum.class).getId();
+        return mapper.readValue(response.getEntity().getContent(), ForumDto.class).getId();
     }
     private String createUserAndGetToken(String name) throws IOException {
         /**
@@ -330,7 +332,7 @@ public class ForumEndpointTest {
          * get token and userID for later use in tests
          */
         HttpPost postAuthorize = new HttpPost(baseURI + ":" + port + basePath + "authentication");
-        post.setHeader("Authorization", "Bearer "+name+":HenkPassword");
+        postAuthorize.setHeader("Authorization", "Bearer "+name+":HenkPassword");
         HttpResponse httpResponse = client.execute(postAuthorize);
         return httpResponse.getFirstHeader("Authorization").getValue();
 

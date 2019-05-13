@@ -40,10 +40,13 @@
 
 
 import endpoints.AuthenticationEndpoint;
+import endpoints.ForumEndpoint;
 import endpoints.MessageResource;
 import endpoints.UserResource;
-import security.AuthenticationFilter;
-import security.CorsFilter;
+import endpoints.security.AuthenticationFilter;
+import endpoints.security.CorsFilter;
+import mappers.ForumMapper;
+import mappers.MessageMapper;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -65,5 +68,6 @@ public class ApplicationConfig extends Application {
         resources.add(AuthenticationFilter.class);
         resources.add(AuthenticationEndpoint.class);
         resources.add(CorsFilter.class);
+        resources.add(ForumEndpoint.class);
     }
 }

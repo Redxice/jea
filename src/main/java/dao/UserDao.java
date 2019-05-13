@@ -1,9 +1,9 @@
 package dao;
 
-import helpers.DoaHelper;
+import helpers.DaoHelper;
 import models.User;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
@@ -13,8 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
 
-
-@Stateless
+@ApplicationScoped
 public class UserDao implements Serializable {
 
     @PersistenceContext(unitName = "myUnit")
@@ -25,7 +24,7 @@ public class UserDao implements Serializable {
     }
 
     public User find(Long id) {
-        return DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findOne", User.class).setParameter("id", id).getResultList());
+        return DaoHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findOne", User.class).setParameter("id", id).getResultList());
     }
 
     public User save(User user){
@@ -46,6 +45,11 @@ public class UserDao implements Serializable {
     public void delete(User user) {
         entityManager.remove(user);
     }
+    public void delete(Long id){
+        entityManager.createNamedQuery("User.deleteById",User.class)
+                .setParameter("id",id)
+                .executeUpdate();
+    }
 
     public User validate(String name,String password){
         String passwordEncoded = password;
@@ -54,7 +58,7 @@ public class UserDao implements Serializable {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        User user = DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.validate", User.class)
+        User user = DaoHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.validate", User.class)
                 .setParameter("name",name)
                 .setParameter("password",passwordEncoded)
                 .getResultList());
@@ -62,7 +66,7 @@ public class UserDao implements Serializable {
 
     }
     public User findUserByName(String username){
-        User user = DoaHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findByName",User.class)
+        User user = DaoHelper.getSingleResult(User.class,entityManager.createNamedQuery("User.findByName",User.class)
         .setParameter("name",username)
         .getResultList());
         return user;

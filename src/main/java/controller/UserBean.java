@@ -1,14 +1,12 @@
-package beans;
+package controller;
 
 import dao.UserDao;
 import models.User;
 
-import javax.ejb.Stateless;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotEmpty;

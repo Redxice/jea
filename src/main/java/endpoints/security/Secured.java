@@ -1,4 +1,4 @@
-package security;
+package endpoints.security;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.ElementType;

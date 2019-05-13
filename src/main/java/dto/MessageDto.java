@@ -2,17 +2,18 @@ package dto;
 
 import models.Message;
 
+import java.util.Date;
+import java.util.List;
+
 public class MessageDto {
+
     private long id;
-    private long userID;
+    private Long owner_id;
     private String content;
+    private Long forum_id;
+    private List<MessageDto> reactions;
+    private Date creationDate;
 
-
-    public MessageDto(Message message){
-        this.id = message.getId();
-        this.userID = message.getUserID();
-        this.content = message.getContent();
-    }
     public long getId() {
         return id;
     }
@@ -21,12 +22,12 @@ public class MessageDto {
         this.id = id;
     }
 
-    public long getUserID() {
-        return userID;
+    public Long getOwner_id() {
+        return owner_id;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setOwner_id(Long owner_id) {
+        this.owner_id = owner_id;
     }
 
     public String getContent() {
@@ -37,4 +38,27 @@ public class MessageDto {
         this.content = content;
     }
 
+    public Long getForum_id() {
+        return forum_id;
+    }
+
+    public void setForum_id(Long forum_id) {
+        this.forum_id = forum_id;
+    }
+
+    public List<MessageDto> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<MessageDto> reactions) {
+        this.reactions = reactions;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 }
