@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,6 +22,9 @@ public class Message implements Serializable {
     private Long id;
     @ManyToOne
     private User owner;
+    @OneToOne
+    private Message mainPost;
+    @NotEmpty(message = "Message is empty")
     private String content;
     private Date creationDate;
     @OneToMany(orphanRemoval=true)
@@ -81,5 +85,13 @@ public class Message implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Message getMainPost() {
+        return mainPost;
+    }
+
+    public void setMainPost(Message mainPost) {
+        this.mainPost = mainPost;
     }
 }

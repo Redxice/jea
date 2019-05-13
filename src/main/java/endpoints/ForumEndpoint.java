@@ -83,7 +83,7 @@ public class ForumEndpoint {
         }
         if(forum.getOwner().getName().equals(username)){
             forumService.deleteForum(id);
-            return Response.ok().build();
+            return Response.status(204).build();
         }else{
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -95,7 +95,7 @@ public class ForumEndpoint {
         String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
         Forum forum = forumMapper.forumDtoToForum(forumDto);
         User owner = userDao.find(forum.getOwner().getId());
-        if(owner.getName().equals(username)){
+        if(owner != null && owner.getName().equals(username)){
             forum = forumService.update(forum);
             return Response.ok(forumMapper.forumToForumDto(forum)).build();
         }else{
@@ -109,8 +109,8 @@ public class ForumEndpoint {
         if(forum == null){
             return Response.status(404).build();
         }
-        List<MessageDto> messageDto = messageMapper.messagesToMesssageDtos(forum.getMessages());
-        return Response.ok(messageDto).build();
+        List<MessageDto> messageDtos = messageMapper.messagesToMesssageDtos(forum.getMessages());
+        return Response.ok(messageDtos).build();
     }
 
 

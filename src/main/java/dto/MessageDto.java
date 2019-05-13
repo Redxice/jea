@@ -13,6 +13,7 @@ public class MessageDto {
     private Long forum_id;
     private List<MessageDto> reactions;
     private Date creationDate;
+    private Long mainPost_id;
 
     public long getId() {
         return id;
@@ -60,5 +61,13 @@ public class MessageDto {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getMainPost_id() {
+        return mainPost_id;
+    }
+
+    public void setMainPost_id(Long mainPost_id) {
+        this.mainPost_id = mainPost_id;
     }
 }

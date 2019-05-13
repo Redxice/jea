@@ -21,12 +21,15 @@ public class MessageDao {
         return entityManager.createNamedQuery("Message.findOne", Message.class).setParameter("id", id).getSingleResult();
     }
 
-    public void save(Message message) {
+    public Message save(Message message) {
         entityManager.persist(message);
+        return message;
     }
 
-    public void update(Message message) {
+    public Message update(Message message) {
         entityManager.merge(message);
+        entityManager.flush();
+        return message;
     }
 
     public void delete(Message message) {

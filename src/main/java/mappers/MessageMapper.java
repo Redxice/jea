@@ -17,13 +17,16 @@ public interface MessageMapper {
     MessageMapper INSTANCE = Mappers.getMapper(MessageMapper.class);
     @Mappings({
             @Mapping(source = "owner.id", target = "owner_id"),
-            @Mapping(source = "forum.id", target = "forum_id")
+            @Mapping(source = "forum.id", target = "forum_id"),
+            @Mapping(source = "mainPost.id",target = "mainPost_id")
     })
     MessageDto messageToMessageDto(Message message);
 
     List<MessageDto> messagesToMesssageDtos(List<Message> messages);
 
     @Mappings({@Mapping(source = "owner_id", target = "owner.id"),
-            @Mapping(source = "forum_id", target = "forum.id")})
+            @Mapping(source = "forum_id", target = "forum.id"),
+            @Mapping(source = "mainPost_id",target = "mainPost.id")
+    })
     Message messageDtoToMessage(MessageDto messageDto);
 }

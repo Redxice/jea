@@ -163,9 +163,8 @@ public class ForumEndpointTest {
         given()
                 .header("Authorization", token)
                 .contentType("application/json")
-                .pathParam("id", forumID)
                 .when()
-                .get("forums/messages")
+                .get("forums/"+forumID+"/messages")
                 .then()
                 .body("messages", notNullValue())
                 .statusCode(200);
@@ -180,7 +179,6 @@ public class ForumEndpointTest {
         given()
                 .header("Authorization", token)
                 .contentType("application/json")
-                .pathParam("id", forumID)
                 .content(forum)
                 .when()
                 .put("forums")
@@ -197,7 +195,7 @@ public class ForumEndpointTest {
                 .contentType("application/json")
                 .content(forum)
                 .when()
-                .put("/"+forumID)
+                .put("forums")
                 .then()
                 .statusCode(401);
     }
@@ -239,7 +237,7 @@ public class ForumEndpointTest {
                 .contentType("application/json")
                 .header("Authorization", token)
                 .when()
-                .delete("/"+id)
+                .delete("forums/"+id)
                 .then()
                 .assertThat()
                 .statusCode(204);
@@ -250,7 +248,7 @@ public class ForumEndpointTest {
         given()
                 .contentType("application/json")
                 .when()
-                .delete("/"+forumID)
+                .delete("forums/"+forumID)
                 .then()
                 .assertThat()
                 .statusCode(401);
@@ -262,7 +260,7 @@ public class ForumEndpointTest {
                 .header("Authorization", token)
                 .contentType("application/json")
                 .when()
-                .delete("/"+999999)
+                .delete("forums/"+999999)
                 .then()
                 .assertThat()
                 .statusCode(404);
@@ -274,9 +272,8 @@ public class ForumEndpointTest {
         given()
                 .header("Authorization", token_new)
                 .contentType("application/json")
-                .pathParam("id", forumID)
                 .when()
-                .delete("forums")
+                .delete("forums/"+forumID)
                 .then()
                 .assertThat()
                 .statusCode(401);
@@ -297,7 +294,7 @@ public class ForumEndpointTest {
 
     private static Map<String, String> createForumMap(String ownerID, String tag, String title,Long id) {
         Map<String, String> forum = new HashMap<>();
-        forum.put("ownerID", ownerID);
+        forum.put("owner_id", ownerID);
         forum.put("tag", tag);
         forum.put("title", title);
         forum.put("id",String.valueOf(id));
