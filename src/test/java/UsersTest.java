@@ -38,9 +38,13 @@ public class UsersTest {
 
     @Test
     public void aPostUserTest() {
+        Map<String, String> params = new HashMap<>();
+        params.put("email", "cool@email.com");
+        params.put("twoFactorEnabled", "true");
         given()
                 .header("Authorization","Bearer test:password")
                 .contentType("application/json")
+                .content(params)
                 .when()
                 .post("users")
                 .then()

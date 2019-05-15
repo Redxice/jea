@@ -27,8 +27,8 @@ public class MessageResource {
     private MessageDao messageDao;
     @Inject
     private MessageService messageService;
-    @Inject
-    private MessageMapper messageMapper;
+
+    private MessageMapper messageMapper = MessageMapper.INSTANCE;
 
     @GET
     public Response all() {

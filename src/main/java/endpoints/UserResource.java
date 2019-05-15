@@ -37,12 +37,16 @@ package endpoints;/*
  */
 
 import javax.inject.Inject;
+
 import dao.UserDao;
+import dto.RegisterDto;
 import dto.UserDto;
 import endpoints.security.Secured;
 import helpers.RestHelper;
 import endpoints.interceptors.testInterceptor;
 import models.User;
+import services.UserService;
+
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +65,8 @@ public class UserResource {
 
     @Inject
     private UserDao userDao;
+    @Inject
+    private UserService userService;
 
     // method to test an interceptor.
     @GET
@@ -71,7 +77,7 @@ public class UserResource {
                 .rel("self").type("GET").build();
         UserDto userDto = new UserDto();
         userDto.setName("Paul");
-        userDto.getLinks().add(self);
+        userDto.getLinks().add(self.toString());
         return userDto;
     }
 
@@ -95,13 +101,12 @@ public class UserResource {
      * @return the created user as userDTO
      */
     @POST
-    public Response save(@Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo) {
-
+    public Response save(@Context HttpServletRequest httpServletRequest, @Context UriInfo uriInfo, RegisterDto registerDto) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
                 List<String> usernameAndPassword = RestHelper.getUsernameAndPassword(authorizationHeader);
-                User new_user = userDao.save(new User(usernameAndPassword.get(0), usernameAndPassword.get(1)));
+                User new_user = userDao.save(new User(usernameAndPassword.get(0), usernameAndPassword.get(1),registerDto.getEmail(),registerDto.isTwoFactorEnabled()));
                 return Response.ok(new UserDto(new_user, uriInfo)).build();
             }
         } catch (Exception e) {
@@ -137,7 +142,7 @@ public class UserResource {
     @GET
     @Path("{id}")
     public Response getUser(@PathParam("id") Long id, @Context UriInfo uriInfo) {
-        User found_user = userDao.find(id);
+        User found_user = userService.find(id);
         if (found_user != null) {
             return Response.ok(new UserDto(found_user, uriInfo)).build();
         }
@@ -161,14 +166,14 @@ public class UserResource {
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 
-        @GET
-        @Path("name/{name}")
-        public Response getUserByName (@PathParam("name") String name) {
-            User found_user = userDao.findUserByName(name);
-            if (found_user != null) {
-                return Response.ok(new UserDto(found_user)).build();
-            }
-            return Response.status(404).build();
+    @GET
+    @Path("name/{name}")
+    public Response getUserByName(@PathParam("name") String name) {
+        User found_user = userDao.findUserByName(name);
+        if (found_user != null) {
+            return Response.ok(new UserDto(found_user)).build();
         }
-
+        return Response.status(404).build();
     }
+
+}

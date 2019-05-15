@@ -30,7 +30,7 @@ public class UserBean implements Serializable {
         return userDao.getAll();
     }
     public String registerUser(){
-        userDao.save(new User(username,password));
+        userDao.save(new User(username,password,"",false));
         return "test";
     }
     public String login(){

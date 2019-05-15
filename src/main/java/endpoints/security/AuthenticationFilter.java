@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 
 @Secured
 @Provider
@@ -68,10 +69,14 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private boolean validateToken(String token) {
         try {
             JWSObject jwsObject = JWSObject.parse(token);
+            Date expiationDate = new Date(jwsObject.getPayload().toJSONObject().getAsString("exp").trim()) ;
+            if(expiationDate.before(new Date(System.currentTimeMillis()))) {
+                JWSVerifier verifier = new MACVerifier(KeyManager.getSharedKey());
+                return jwsObject.verify(verifier);
+            }else{
+                return false;
+            }
 
-            JWSVerifier verifier = new MACVerifier(KeyManager.getSharedKey());
-
-            return jwsObject.verify(verifier);
         } catch (ParseException | JOSEException e) {
             e.printStackTrace();
         }

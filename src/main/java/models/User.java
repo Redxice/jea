@@ -36,6 +36,8 @@ package models;/*
  * holder.
  */
 
+import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+
 import javax.persistence.*;
 import javax.ws.rs.core.Link;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -63,6 +65,11 @@ public class User {
     @Id
     @GeneratedValue
     private long id;
+    /**
+     * TODO: replace name with mail in checks
+     */
+    @Column(unique = true)
+    private String email;
     @Column(unique = true)
     private String name;
     private String password;
@@ -72,12 +79,16 @@ public class User {
     private List<Forum> forums = new ArrayList<>();
     @OneToMany(mappedBy="owner", orphanRemoval=true)
     private List<Message> messages = new ArrayList<>();
+    private String twoFactorAuthKey;
+    private boolean twoFactorEnabled;
     public User() {
     }
 
-    public User(String name, String password) {
+    public User(String name, String password,String email,boolean twoFactorEnabled) {
         this.name = name;
         this.password = password;
+        this.email = email;
+        this.twoFactorEnabled = twoFactorEnabled;
     }
 
     @Override
@@ -139,5 +150,30 @@ public class User {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+
+    public void setTwoFactorAuthKey(String twoFactorAuthKey) {
+        this.twoFactorAuthKey = twoFactorAuthKey;
+    }
+
+    public String getTwoFactorAuthKey() {
+        return twoFactorAuthKey;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
     }
 }

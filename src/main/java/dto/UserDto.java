@@ -23,9 +23,9 @@ public class UserDto {
     private String name;
     private int level;
     private int hoursPlayed;
-    @XmlElement(name = "link")
-    @XmlJavaTypeAdapter(LinkAdapter.class)
-    private List<Link> links = new ArrayList<>();
+    private List<String> links = new ArrayList<>();
+    private boolean twoFactorEnabled;
+    private String email;
 
     public UserDto(){}
 
@@ -34,6 +34,8 @@ public class UserDto {
         this.name = user.getName();
         this.level = user.getLevel();
         this.hoursPlayed = user.getHoursPlayed();
+        this.twoFactorEnabled = user.isTwoFactorEnabled();
+        this.email = user.getEmail();
     }
     public UserDto(User user,UriInfo uriInfo) {
         this(user);
@@ -51,11 +53,11 @@ public class UserDto {
                 .queryParam("User",user)).type("PUT").build();
         Link saveUser = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder()
                 .queryParam("User",user)).type("POST").build();
-        this.links.add(self);
-        this.links.add(deleteUser);
-        this.links.add(getUser);
-        this.links.add(updateUser);
-        this.links.add(saveUser);
+        this.links.add(self.toString());
+        this.links.add(deleteUser.toString());
+        this.links.add(getUser.toString());
+        this.links.add(updateUser.toString());
+        this.links.add(saveUser.toString());
     }
     public long getId() {
         return id;
@@ -89,11 +91,27 @@ public class UserDto {
         this.hoursPlayed = hoursPlayed;
     }
 
-    public List<Link> getLinks() {
+    public List<String> getLinks() {
         return links;
     }
 
-    public void setLinks(List<Link> links) {
+    public void setLinks(List<String> links) {
         this.links = links;
+    }
+
+    public boolean isTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
