@@ -11,10 +11,12 @@ import mappers.MessageMapper;
 import models.Forum;
 import models.User;
 import services.ForumService;
+import services.ForumUpdateService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
@@ -23,39 +25,50 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.sse.SseEventSink;
 import java.util.List;
 import java.util.Set;
 
 @Stateless
 @Path("forums")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class ForumEndpoint {
 
     @Inject
     private ForumService forumService;
 
     @Inject
-    private UserDao userDao;
+    private UserDao userService;
+    @Inject
+    private ForumUpdateService forumUpdateService;
 
     private ForumMapper forumMapper = ForumMapper.INSTANCE;
 
     private MessageMapper messageMapper = MessageMapper.INSTANCE;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAll(){
-        return Response.status(200).entity(forumService.getAll()).build();
+        List<ForumDto> forumDtos = forumMapper.forumsToForumDtos(forumService.getAll());
+        return Response.status(200).entity(forumDtos).build();
+    }
+    @GET
+    @Path("subscribe")
+    @Produces("json/event-stream")
+    public void listen(@Context SseEventSink sseEventSink){
+        forumUpdateService.listen(sseEventSink);
     }
 
     @POST
     @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response saveForum(ForumDto forumDto){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<ForumDto>> violations = validator.validate(forumDto);
         if(violations.isEmpty()){
             Forum forum = forumMapper.forumDtoToForum(forumDto);
-            forum.setOwner(userDao.find(forum.getOwner().getId()));
+            forum.setOwner(userService.find(forum.getOwner().getId()));
             forum = forumService.save(forum);
             return Response.ok(forumMapper.forumToForumDto(forum)).build();
         }
@@ -65,6 +78,8 @@ public class ForumEndpoint {
     }
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") Long id){
         Forum forum = forumService.findById(id);
         if(forum != null){
@@ -76,6 +91,8 @@ public class ForumEndpoint {
     @DELETE
     @Path("/{id}")
     @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteForum(@PathParam("id") Long id,@Context HttpServletRequest httpServletRequest){
         String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
         Forum forum = forumService.findById(id);
@@ -92,19 +109,24 @@ public class ForumEndpoint {
 
     @PUT
     @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateForum(ForumDto forumDto,@Context HttpServletRequest httpServletRequest){
         String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
         Forum forum = forumMapper.forumDtoToForum(forumDto);
-        User owner = userDao.find(forum.getOwner().getId());
+        User owner = userService.find(forum.getOwner().getId());
         if(owner != null && owner.getName().equals(username)){
-            forum = forumService.update(forum);
-            return Response.ok(forumMapper.forumToForumDto(forum)).build();
+            ForumDto forum_new = forumMapper.forumToForumDto(forumService.update(forum));
+            forumUpdateService.broadcast(forum_new);
+            return Response.ok(forum_new).build();
         }else{
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
     @GET
     @Path("{id}/messages")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getForumMessages(@PathParam("id") Long id){
         Forum forum = forumService.findById(id);
         if(forum == null){
@@ -113,6 +135,7 @@ public class ForumEndpoint {
         List<MessageDto> messageDtos = messageMapper.messagesToMesssageDtos(forum.getMessages());
         return Response.ok(messageDtos).build();
     }
+
 
 
 
