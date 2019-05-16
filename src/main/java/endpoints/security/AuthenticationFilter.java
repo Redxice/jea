@@ -69,8 +69,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private boolean validateToken(String token) {
         try {
             JWSObject jwsObject = JWSObject.parse(token);
-            Date expiationDate = new Date(jwsObject.getPayload().toJSONObject().getAsString("exp").trim()) ;
-            if(expiationDate.before(new Date(System.currentTimeMillis()))) {
+           Long test = Long.valueOf(jwsObject.getPayload().toJSONObject().getAsString("exp").trim()) ;
+           Date date = new Date(test);
+            if(date.before(new Date(System.currentTimeMillis()))) {
                 JWSVerifier verifier = new MACVerifier(KeyManager.getSharedKey());
                 return jwsObject.verify(verifier);
             }else{

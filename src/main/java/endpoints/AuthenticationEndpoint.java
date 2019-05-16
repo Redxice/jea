@@ -41,6 +41,7 @@ public class AuthenticationEndpoint {
                 if (user != null) {
                     if (!user.isTwoFactorEnabled()) {
                         String token = authenticatorService.generateToken(user);
+
                         return Response.ok(new UserDto(user)).header("Authorization", "Bearer " + token).build();
                     }
                     else {

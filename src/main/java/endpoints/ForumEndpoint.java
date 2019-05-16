@@ -29,7 +29,7 @@ import javax.ws.rs.sse.SseEventSink;
 import java.util.List;
 import java.util.Set;
 
-@Stateless
+@ApplicationScoped
 @Path("forums")
 public class ForumEndpoint {
 
