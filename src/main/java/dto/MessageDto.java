@@ -12,7 +12,7 @@ public class MessageDto {
     private String content;
     private Long forum_id;
     private List<MessageDto> reactions;
-    private Date creationDate;
+    private String creationDate;
 //    private Long mainPost_id;
 
     public long getId() {
@@ -55,15 +55,15 @@ public class MessageDto {
         this.reactions = reactions;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
-//    public Long getMainPost_id() {
+    //    public Long getMainPost_id() {
 //        return mainPost_id;
 //    }
 //

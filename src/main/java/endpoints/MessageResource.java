@@ -5,8 +5,11 @@ import dto.MessageDto;
 import endpoints.security.Secured;
 import helpers.RestHelper;
 import mappers.MessageMapper;
+import models.Forum;
 import models.Message;
+import services.ForumService;
 import services.MessageService;
+import services.UserService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -27,6 +31,10 @@ public class MessageResource {
     private MessageDao messageDao;
     @Inject
     private MessageService messageService;
+    @Inject
+    private UserService userService;
+    @Inject
+    private ForumService forumService;
 
     private MessageMapper messageMapper = MessageMapper.INSTANCE;
 
@@ -46,8 +54,25 @@ public class MessageResource {
 
     @POST
     @Secured
-    public Response save(MessageDto messageDto) {
-      return Response.status(200).entity(messageService.save(messageMapper.messageDtoToMessage(messageDto))).build() ;
+    public Response save(MessageDto messageDto,@Context HttpServletRequest httpServletRequest) {
+        String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
+        long id = userService.findByName(username).getId();
+        if (id == messageDto.getOwner_id()){
+            messageDto.setCreationDate(new Date(System.currentTimeMillis()).toString());
+            Message message = messageMapper.messageDtoToMessage(messageDto);
+            message = messageService.save(message);
+            if(message.getForum()!=null){
+                Forum forum = message.getForum();
+                forum.getMessages().add(message);
+                this.forumService.update(message.getForum());
+            }
+            messageDto = messageMapper.messageToMessageDto(message);
+            return Response.status(200).entity(messageDto).build() ;
+        }
+        else{
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
     }
 
     @GET
@@ -84,7 +109,7 @@ public class MessageResource {
         String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
         Message message = messageMapper.messageDtoToMessage(messageDto);
         if (messageService.checkIfUserIdMatch(username, message)) {
-            Message mainPost = messageService.findById(message.getMainPost().getId());
+            Message mainPost = messageService.findById(id);
             if (mainPost == null) {
                 return Response.status(404).entity("mainPost could not be found").build();
             } else {

@@ -21,7 +21,7 @@ public class Forum {
     private String tag;
     @ManyToOne
     private User owner;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Message> messages = new ArrayList<>();
 
     public Long getId() {

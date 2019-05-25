@@ -2,6 +2,8 @@ package dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ForumDto {
     private Long id;
@@ -12,6 +14,7 @@ public class ForumDto {
     @NotEmpty(message = "A forum needs a title")
     private String title;
 
+    private List<MessageDto> messageDtos = new ArrayList<>();
     public Long getId() {
         return id;
     }
@@ -42,5 +45,13 @@ public class ForumDto {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<MessageDto> getMessageDtos() {
+        return messageDtos;
+    }
+
+    public void setMessageDtos(List<MessageDto> messageDtos) {
+        this.messageDtos = messageDtos;
     }
 }

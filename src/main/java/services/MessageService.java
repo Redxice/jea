@@ -2,11 +2,13 @@ package services;
 
 import dao.MessageDao;
 import dao.UserDao;
+import dto.MessageDto;
 import models.Message;
 import models.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 @Stateless
 public class MessageService {

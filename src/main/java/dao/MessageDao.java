@@ -23,6 +23,7 @@ public class MessageDao {
 
     public Message save(Message message) {
         entityManager.persist(message);
+        entityManager.flush();
         return message;
     }
 

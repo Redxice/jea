@@ -26,7 +26,7 @@ public class Message implements Serializable {
     private Message mainPost;
     @NotEmpty(message = "Message is empty")
     private String content;
-    private Date creationDate;
+    private String creationDate;
     @OneToMany(orphanRemoval=true)
     private List<Message> reactions = new ArrayList<>();
     @ManyToOne
@@ -59,11 +59,11 @@ public class Message implements Serializable {
         this.reactions = reactions;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

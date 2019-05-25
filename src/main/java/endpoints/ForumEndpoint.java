@@ -9,9 +9,11 @@ import helpers.RestHelper;
 import mappers.ForumMapper;
 import mappers.MessageMapper;
 import models.Forum;
+import models.Message;
 import models.User;
 import services.ForumService;
 import services.ForumUpdateService;
+import services.MessageService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -29,8 +31,10 @@ import javax.ws.rs.sse.SseEventSink;
 import java.util.List;
 import java.util.Set;
 
-@ApplicationScoped
+@RequestScoped
 @Path("forums")
+@Consumes("application/json")
+@Produces("application/json")
 public class ForumEndpoint {
 
     @Inject
@@ -40,6 +44,7 @@ public class ForumEndpoint {
     private UserDao userService;
     @Inject
     private ForumUpdateService forumUpdateService;
+
 
     private ForumMapper forumMapper = ForumMapper.INSTANCE;
 
@@ -52,8 +57,8 @@ public class ForumEndpoint {
         return Response.status(200).entity(forumDtos).build();
     }
     @GET
-    @Path("subscribe")
-    @Produces("json/event-stream")
+    @Path("/subscribe")
+    @Produces("text/event-stream")
     public void listen(@Context SseEventSink sseEventSink){
         forumUpdateService.listen(sseEventSink);
     }
@@ -70,7 +75,9 @@ public class ForumEndpoint {
             Forum forum = forumMapper.forumDtoToForum(forumDto);
             forum.setOwner(userService.find(forum.getOwner().getId()));
             forum = forumService.save(forum);
-            return Response.ok(forumMapper.forumToForumDto(forum)).build();
+            ForumDto forumDto1 = forumMapper.forumToForumDto(forum);
+            forumUpdateService.broadcast(forumDto1);
+            return Response.ok(forumDto1).build();
         }
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
 
@@ -83,7 +90,18 @@ public class ForumEndpoint {
     public Response getById(@PathParam("id") Long id){
         Forum forum = forumService.findById(id);
         if(forum != null){
-            return Response.ok(forumMapper.forumToForumDto(forum)).build();
+            ForumDto forumDto = forumMapper.forumToForumDto(forum);
+            if(forum.getMessages().size()!=0) {
+                List<MessageDto> messageDtos = messageMapper.messagesToMesssageDtos(forum.getMessages());
+            }
+         for(Message message : forum.getMessages()){
+             MessageDto messageDto = messageMapper.messageToMessageDto(message);
+             for(Message message1 : message.getReactions()){
+                 messageDto.getReactions().add(messageMapper.messageToMessageDto(message1)) ;
+             }
+             forumDto.getMessageDtos().add(messageDto);
+         }
+            return Response.ok(forumDto).build();
         }
         return Response.status(404).build();
     }
