@@ -59,6 +59,7 @@ public class MessageResource {
             messageDto.setCreationDate(new Date(System.currentTimeMillis()).toString());
             Message message = messageMapper.messageDtoToMessage(messageDto);
             message = messageService.save(message);
+            message.setOwner(userService.find(message.getOwner().getId()));
             messageDto = messageMapper.messageToMessageDto(message);
             return Response.status(200).entity(messageDto).build() ;
         }

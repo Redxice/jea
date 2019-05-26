@@ -4,10 +4,9 @@ import helpers.LinkAdapter;
 import models.User;
 
 import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriInfo;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class UserDto {
 
     private long id;
@@ -23,7 +21,12 @@ public class UserDto {
     private String name;
     private int level;
     private int hoursPlayed;
-    private List<String> links = new ArrayList<>();
+    @XmlElement(name="links")
+    @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
+    private List<Link> links = new ArrayList<>();
+    @XmlElement(name="link")
+    @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
+    private Link link;
     private boolean twoFactorEnabled;
     private String email;
 
@@ -40,6 +43,8 @@ public class UserDto {
     public UserDto(User user,UriInfo uriInfo) {
         this(user);
         generateLinks(uriInfo,user);
+        this.link = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder())
+                .rel("self").type("GET").build();
     }
 
     private void generateLinks(UriInfo uriInfo, User user){
@@ -53,11 +58,11 @@ public class UserDto {
                 .queryParam("User",user)).type("PUT").build();
         Link saveUser = Link.fromUriBuilder(uriInfo.getAbsolutePathBuilder()
                 .queryParam("User",user)).type("POST").build();
-        this.links.add(self.toString());
-        this.links.add(deleteUser.toString());
-        this.links.add(getUser.toString());
-        this.links.add(updateUser.toString());
-        this.links.add(saveUser.toString());
+        this.links.add(self);
+        this.links.add(deleteUser);
+        this.links.add(getUser);
+        this.links.add(updateUser);
+        this.links.add(saveUser);
     }
     public long getId() {
         return id;
@@ -91,13 +96,6 @@ public class UserDto {
         this.hoursPlayed = hoursPlayed;
     }
 
-    public List<String> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<String> links) {
-        this.links = links;
-    }
 
     public boolean isTwoFactorEnabled() {
         return twoFactorEnabled;
@@ -113,5 +111,21 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 }

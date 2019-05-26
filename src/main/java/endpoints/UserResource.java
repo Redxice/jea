@@ -60,7 +60,7 @@ import java.util.List;
 
 @Stateless
 @Path("users")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
 
@@ -80,7 +80,7 @@ public class UserResource {
                 .rel("self").type("GET").build();
         UserDto userDto = new UserDto();
         userDto.setName("Paul");
-        userDto.getLinks().add(self.toString());
+        userDto.getLinks().add(self);
         return userDto;
     }
 

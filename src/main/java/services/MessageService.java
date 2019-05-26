@@ -19,8 +19,7 @@ public class MessageService {
     @Inject
     private MessageDao messageDao;
     @Inject
-    private UserDao userDao;
-
+    private UserService userService;
     private MessageMapper messageMapper = MessageMapper.INSTANCE;
 
     public Message save(Message message) {
@@ -28,7 +27,7 @@ public class MessageService {
     }
 
     public boolean checkIfUserIdMatch(String username, Message message) {
-        User user = userDao.findUserByName(username);
+        User user = userService.findByName(username);
         return message.getOwner().getId() == user.getId();
     }
 
@@ -46,6 +45,7 @@ public class MessageService {
         MessageDto messageDto = messageMapper.messageToMessageDto(mainPost);
         for (Message message: messages) {
             MessageDto reactionDto = messageMapper.messageToMessageDto(message);
+            reaction.setOwner(userService.find(reaction.getOwner().getId()));
             messageDto.getReactions().add(reactionDto);
         }
 
@@ -53,24 +53,26 @@ public class MessageService {
     }
     public List<MessageDto> getByForum(Long id) {
         List<Message> messages = messageDao.findByForumId(id);
-        return mapMessages(messages);
+        return mapMessages(messages,true);
     }
     public List<MessageDto> getByUser(Long id){
         List<Message> messages= messageDao.findByUser(id);
-        return mapMessages(messages);
+        return mapMessages(messages,false);
     }
 
-    private List<MessageDto> mapMessages(List<Message> messages){
+    private List<MessageDto> mapMessages(List<Message> messages,boolean reactionMatter){
         List<MessageDto> messageDtos = new ArrayList<>();
         for (Message message: messages){
             MessageDto messageDto = messageMapper.messageToMessageDto(message);
-            if(message.getMainPost()==null) {
-                for (Message reaction : getReactions(message)) {
-                    MessageDto reactioDto = messageMapper.messageToMessageDto(reaction);
-                    messageDto.getReactions().add(reactioDto);
+            if(reactionMatter) {
+                if (message.getMainPost() == null) {
+                    for (Message reaction : getReactions(message)) {
+                        MessageDto reactioDto = messageMapper.messageToMessageDto(reaction);
+                        messageDto.getReactions().add(reactioDto);
+                    }
                 }
-                messageDtos.add(messageDto);
             }
+            messageDtos.add(messageDto);
 
         }
         return messageDtos;

@@ -30,7 +30,7 @@ public class Message implements Serializable {
     private String creationDate;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Message mainPost;
-    @OneToMany(cascade ={CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "mainPost",orphanRemoval=true)
+    @OneToMany(cascade ={CascadeType.MERGE,CascadeType.REFRESH},fetch = FetchType.EAGER,mappedBy = "mainPost",orphanRemoval=true)
     private List<Message> reactions = new ArrayList<>();
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Forum forum;
