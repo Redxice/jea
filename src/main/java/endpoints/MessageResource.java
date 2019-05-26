@@ -33,8 +33,6 @@ public class MessageResource {
     private MessageService messageService;
     @Inject
     private UserService userService;
-    @Inject
-    private ForumService forumService;
 
     private MessageMapper messageMapper = MessageMapper.INSTANCE;
 
@@ -61,11 +59,6 @@ public class MessageResource {
             messageDto.setCreationDate(new Date(System.currentTimeMillis()).toString());
             Message message = messageMapper.messageDtoToMessage(messageDto);
             message = messageService.save(message);
-            if(message.getForum()!=null){
-                Forum forum = message.getForum();
-                forum.getMessages().add(message);
-                this.forumService.update(message.getForum());
-            }
             messageDto = messageMapper.messageToMessageDto(message);
             return Response.status(200).entity(messageDto).build() ;
         }
@@ -107,15 +100,14 @@ public class MessageResource {
     @Path("{id}")
     public Response reactToMessage(@PathParam("id") Long id, MessageDto messageDto, @Context HttpServletRequest httpServletRequest) {
         String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
+        messageDto.setCreationDate(new Date(System.currentTimeMillis()).toString());
         Message message = messageMapper.messageDtoToMessage(messageDto);
         if (messageService.checkIfUserIdMatch(username, message)) {
             Message mainPost = messageService.findById(id);
             if (mainPost == null) {
                 return Response.status(404).entity("mainPost could not be found").build();
             } else {
-                Message updatedMainPost = messageService.addReaction(mainPost, message);
-                MessageDto messageDtoMainPost =messageMapper.messageToMessageDto(updatedMainPost);
-                return Response.status(200).entity(messageDtoMainPost).build();
+                return Response.status(200).entity(messageService.addReaction(mainPost, message)).build();
             }
         }
         return Response.status(401).build();

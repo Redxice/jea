@@ -77,7 +77,7 @@ public class User {
     private int hoursPlayed;
     @OneToMany(mappedBy="owner", orphanRemoval=true)
     private List<Forum> forums = new ArrayList<>();
-    @OneToMany(mappedBy="owner", orphanRemoval=true)
+    @OneToMany(mappedBy="owner",orphanRemoval=true)
     private List<Message> messages = new ArrayList<>();
     private String twoFactorAuthKey;
     private boolean twoFactorEnabled;

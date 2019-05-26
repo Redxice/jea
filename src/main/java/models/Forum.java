@@ -21,7 +21,7 @@ public class Forum {
     private String tag;
     @ManyToOne
     private User owner;
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.REFRESH},mappedBy = "forum",orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
     public Long getId() {

@@ -9,6 +9,7 @@ public class MessageDto {
 
     private long id;
     private Long owner_id;
+    private String username;
     private String content;
     private Long forum_id;
     private List<MessageDto> reactions;
@@ -63,7 +64,14 @@ public class MessageDto {
         this.creationDate = creationDate;
     }
 
-    //    public Long getMainPost_id() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+//    public Long getMainPost_id() {
 //        return mainPost_id;
 //    }
 //

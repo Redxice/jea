@@ -43,6 +43,7 @@ public class ForumDao {
 
     public void update(Forum forum) {
         entityManager.merge(forum);
+        entityManager.flush();
     }
 
     public void delete(Long id) {

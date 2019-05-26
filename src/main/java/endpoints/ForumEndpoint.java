@@ -44,6 +44,8 @@ public class ForumEndpoint {
     private UserDao userService;
     @Inject
     private ForumUpdateService forumUpdateService;
+    @Inject
+    private MessageService messageService;
 
 
     private ForumMapper forumMapper = ForumMapper.INSTANCE;
@@ -91,16 +93,7 @@ public class ForumEndpoint {
         Forum forum = forumService.findById(id);
         if(forum != null){
             ForumDto forumDto = forumMapper.forumToForumDto(forum);
-            if(forum.getMessages().size()!=0) {
-                List<MessageDto> messageDtos = messageMapper.messagesToMesssageDtos(forum.getMessages());
-            }
-         for(Message message : forum.getMessages()){
-             MessageDto messageDto = messageMapper.messageToMessageDto(message);
-             for(Message message1 : message.getReactions()){
-                 messageDto.getReactions().add(messageMapper.messageToMessageDto(message1)) ;
-             }
-             forumDto.getMessageDtos().add(messageDto);
-         }
+            forumDto.setMessageDtos(messageService.getByForum(id));
             return Response.ok(forumDto).build();
         }
         return Response.status(404).build();

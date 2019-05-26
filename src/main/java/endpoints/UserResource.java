@@ -45,6 +45,7 @@ import endpoints.security.Secured;
 import helpers.RestHelper;
 import endpoints.interceptors.testInterceptor;
 import models.User;
+import services.MessageService;
 import services.UserService;
 
 import javax.ejb.Stateless;
@@ -67,6 +68,8 @@ public class UserResource {
     private UserDao userDao;
     @Inject
     private UserService userService;
+    @Inject
+    private MessageService messageService;
 
     // method to test an interceptor.
     @GET
@@ -165,7 +168,18 @@ public class UserResource {
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
-
+    @GET
+    @Secured
+    @Path("{id}/messages")
+    public Response getMessages(@Context HttpServletRequest httpServletRequest,@PathParam("id") Long id){
+        String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
+        User user = userService.findByName(username);
+        if(user.getId() == id){
+            return Response.ok(messageService.getByUser(id)).build();
+        }else{
+            return Response.status(401).build();
+        }
+    }
     @GET
     @Path("name/{name}")
     public Response getUserByName(@PathParam("name") String name) {

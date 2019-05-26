@@ -13,23 +13,26 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "models.Message.findOne", query = "select m from Message m where m.id = :id"),
-        @NamedQuery(name = "models.Message.getAll", query = "select m from Message m")
+        @NamedQuery(name = "models.Message.getAll", query = "select m from Message m"),
+        @NamedQuery(name = "models.Message.findByForumId", query = "select m from Message m where m.forum.id = :id and m.mainPost = null"),
+        @NamedQuery(name = "models.Message.findByUserId", query = "select m from Message m where m.owner.id = :id "),
+        @NamedQuery(name = "models.Message.findByMainPostId", query = "select m from Message m where m.mainPost.id = :id")
 }
 )
 public class Message implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     private User owner;
-    @OneToOne
-    private Message mainPost;
     @NotEmpty(message = "Message is empty")
     private String content;
     private String creationDate;
-    @OneToMany(orphanRemoval=true)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Message mainPost;
+    @OneToMany(cascade ={CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "mainPost",orphanRemoval=true)
     private List<Message> reactions = new ArrayList<>();
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Forum forum;
     public Message(){
 
@@ -94,4 +97,9 @@ public class Message implements Serializable {
     public void setMainPost(Message mainPost) {
         this.mainPost = mainPost;
     }
+    public void addReaction(Message reaction){
+        reaction.setMainPost(this);
+        this.reactions.add(reaction);
+    }
+
 }
