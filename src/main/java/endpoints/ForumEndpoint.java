@@ -4,6 +4,7 @@ import dao.ForumDao;
 import dao.UserDao;
 import dto.ForumDto;
 import dto.MessageDto;
+import endpoints.interceptors.logger;
 import endpoints.security.Secured;
 import helpers.RestHelper;
 import mappers.ForumMapper;
@@ -20,6 +21,8 @@ import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptor;
+import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import javax.ws.rs.*;
@@ -104,6 +107,7 @@ public class ForumEndpoint {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Interceptors(logger.class)
     public Response deleteForum(@PathParam("id") Long id,@Context HttpServletRequest httpServletRequest){
         String username = RestHelper.getUsernameFromJWT(httpServletRequest.getHeader("Authorization"));
         Forum forum = forumService.findById(id);
